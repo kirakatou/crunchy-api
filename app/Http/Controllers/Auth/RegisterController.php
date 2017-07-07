@@ -2,10 +2,14 @@
 
 namespace App\Http\Controllers\Auth;
 
+use JWTAuth;
 use App\User;
+use App\Profile;
 use App\Http\Controllers\Controller;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Foundation\Auth\RegistersUsers;
+use Illuminate\Auth\Events\Registered;
 
 class RegisterController extends Controller
 {
@@ -48,9 +52,11 @@ class RegisterController extends Controller
     protected function validator(array $data)
     {
         return Validator::make($data, [
-            'name' => 'required|string|max:255',
-            'email' => 'required|string|email|max:255|unique:users',
-            'password' => 'required|string|min:6|confirmed',
+            'name'     => 'required|max:255',
+            'username' => 'required|max:255|unique:users',
+            'email'    => 'required|email|max:255|unique:profiles',
+            'password' => 'required|min:6|confirmed',
+            'gender'   => 'required',
         ]);
     }
 
@@ -62,10 +68,33 @@ class RegisterController extends Controller
      */
     protected function create(array $data)
     {
-        return User::create([
-            'name' => $data['name'],
-            'email' => $data['email'],
+        $fields = [
+            'name'     => $data['name'],
+            'username' => $data['username'],
             'password' => bcrypt($data['password']),
-        ]);
+            'gender'   => $data['gender'],
+            'email'    => $data['email'],
+        ];
+        // if (config('auth.providers.users.field','email') === 'username' && isset($data['username'])) {
+        //     $fields['username'] = $data['username'];
+        // }
+        $user = User::create($fields);
+        $profile = Profile::create($fields);
+        $profile->user()->save($user);
+        return $user;
+    }
+
+    /**
+     * Handle a registration request for the application.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function register(Request $request)
+    {
+        $this->validator($request->all())->validate();
+        event(new Registered($user = $this->create($request->all())));
+        $token = JWTAuth::fromUser($user);
+        return response()->json(['token' => $token, 'status' => 'Success']);
     }
 }
