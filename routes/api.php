@@ -23,6 +23,12 @@ Route::group(['prefix' => 'v1'], function(){
 
 	Route::post('login', 'Auth\LoginController@authenticate');
 
-	
+	Route::group(['middleware' => 'jwt.auth'], function(){
+
+		Route::resource('post', 'PostController', ['except' => [
+			'create', 'edit'
+		]]);
+
+	});
 
 });
