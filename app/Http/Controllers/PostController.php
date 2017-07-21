@@ -38,7 +38,27 @@ class PostController extends Controller
      */
     public function store(Request $request)
     {
-        
+        $this->validate($request, [
+            'image' => 'image|required',
+            'taste' => 'numeric|required',
+            'price' => 'numeric|required',
+            'service' => 'numeric|required',
+        ]);
+        if($request->hasFile('image')){
+            if($request->image->isValid()){
+                $path = $request->image->store('public/post/' . Auth::user()->id);
+                $post = new Post();
+                $post->user()->associate(Auth::user()->id);
+                $post->merchant()->associate($request->merchant_id);
+                $post->path = $path;
+                $post->description = $request->description;
+                $post->taste = $request->taste;
+                $post->price = $request->price;
+                $post->service = $request->service;
+                $post->save();
+                return $post;
+            }
+        }
     }
 
     /**
