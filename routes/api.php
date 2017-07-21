@@ -21,4 +21,8 @@ Route::group(['prefix' => 'v1'], function(){
 	
 	Route::post('register', 'Auth\RegisterController@register');
 
+	Route::post('login', 'Auth\LoginController@authenticate');
+
+	
+
 });
