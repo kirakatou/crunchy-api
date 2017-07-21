@@ -11,4 +11,12 @@ class Post extends Model
         return $this->belongsTo('App\User');
     }
 
+    public function merchant() {
+        return $this->belongsTo('App\Merchant');
+    }
+
+    public function getPathAttribute($value){
+    	return Storage::url($value);
+    }
+
 }
