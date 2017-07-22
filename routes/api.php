@@ -27,6 +27,8 @@ Route::group(['prefix' => 'v1'], function(){
 
 		Route::resource('post', 'PostController', ['except' => [
 			'create', 'edit'
+		Route::resource('title', 'TitleController', ['except' => [
+			'create', 'edit'
 		]]);
 
 	});
