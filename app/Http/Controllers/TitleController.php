@@ -15,7 +15,8 @@ class TitleController extends Controller
      */
     public function index()
     {
-        
+        $titles = Title::paginate();
+        return $titles;
     }
 
     /**
