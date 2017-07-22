@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use Auth;
+use App\Title;
 use Illuminate\Http\Request;
 
 class TitleController extends Controller
@@ -13,7 +15,7 @@ class TitleController extends Controller
      */
     public function index()
     {
-        //
+        
     }
 
     /**
@@ -34,7 +36,11 @@ class TitleController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $title = new Title();
+        $title->level = $request->level;
+        $title->name = $request->name;
+        $title->save();
+        return $title;
     }
 
     /**
