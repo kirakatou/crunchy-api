@@ -29,6 +29,10 @@ Route::group(['prefix' => 'v1'], function(){
 			'create', 'edit'
 		]]);
 
+		Route::resource('category', 'CategoryController', ['except' => [
+			'create', 'edit'
+		]]);	
+
 	});
 
 });
