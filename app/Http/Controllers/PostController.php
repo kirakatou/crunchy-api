@@ -6,6 +6,8 @@ use Auth;
 use Storage;
 use App\Post;
 use App\Comment;
+use App\Like;
+use App\User;
 use Illuminate\Http\Request;
 
 class PostController extends Controller
@@ -61,6 +63,7 @@ class PostController extends Controller
                 return $post;
             }
         }
+
     }
 
     /**
@@ -127,11 +130,21 @@ class PostController extends Controller
         return $comments;
     }
 
+    //delete all comments
     public function deleteComments($id)
     {   
         $post = Post::find($id);    
         $post->comment()->delete();
         return $post;
     }
+
+    public function showLikes($id)
+    {
+        $post = Post::find($id);
+        $likes = Like::where('post_id', $post->id)->where('like', 1)->count();
+        return $likes;
+    }
+
+
 
 }
