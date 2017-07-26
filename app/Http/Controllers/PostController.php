@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Auth;
 use Storage;
 use App\Post;
+use App\Comment;
 use Illuminate\Http\Request;
 
 class PostController extends Controller
@@ -43,6 +44,7 @@ class PostController extends Controller
             'taste' => 'numeric|required',
             'price' => 'numeric|required',
             'service' => 'numeric|required',
+            'description' => 'required',
         ]);
         if($request->hasFile('image')){
             if($request->image->isValid()){
@@ -105,4 +107,31 @@ class PostController extends Controller
     {
         //
     }
+
+    public function addComment(Request $request, $id)
+    {
+        $post = Post::find($id);
+        $comment = new Comment();
+        $comment->post_id = $post->id;
+        $comment->user_id = Auth::id();
+        $comment->comment = $request->comment;
+        $comment->save();
+
+        return $comment;
+    }
+
+    public function showComments($id)
+    {
+        $post = Post::find($id);
+        $comments = Comment::where('post_id', $post->id)->get();
+        return $comments;
+    }
+
+    public function deleteComments($id)
+    {   
+        $post = Post::find($id);    
+        $post->comment()->delete();
+        return $post;
+    }
+
 }

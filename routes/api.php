@@ -27,14 +27,19 @@ Route::group(['prefix' => 'v1'], function(){
 
 		Route::resource('post', 'PostController', ['except' => [
 			'create', 'edit'
+		]]);
+		
 		Route::resource('title', 'TitleController', ['except' => [
 			'create', 'edit'
 		]]);
 
 		Route::resource('category', 'CategoryController', ['except' => [
 			'create', 'edit'
-		]]);	
+		]]);
 
+		Route::post('post/{id}/addComment', 'PostController@addComment');
+		Route::get('post/{id}/comments', 'PostController@showComments');
+		Route::delete('post/{id}/deleteComments', 'PostController@deleteComments');
 	});
 
 });
