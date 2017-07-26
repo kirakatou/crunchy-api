@@ -6,9 +6,9 @@ use Illuminate\Database\Eloquent\Model;
 
 class Comment extends Model
 {
-    protected $fillable = ['user_id', 'comment'];
+    protected $fillable = ['user_id', 'post_id', 'comment'];
 
-    public funtion post(){
+    public function post(){
     	$this->belongsTo('App\Post');
     }
 }
