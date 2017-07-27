@@ -9,6 +9,7 @@ use App\Comment;
 use App\Like;
 use App\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class PostController extends Controller
 {
@@ -127,24 +128,53 @@ class PostController extends Controller
     {
         $post = Post::find($id);
         $comments = Comment::where('post_id', $post->id)->get();
+        
         return $comments;
     }
 
-    //delete all comments
-    public function deleteComments($id)
+    public function deleteComment(Request $request, $id, $comment_id)
     {   
-        $post = Post::find($id);    
-        $post->comment()->delete();
-        return $post;
+        $post = Post::find($id);
+        $comment_id = Comment::find($comment_id); 
+        $deleteComment = Comment::where('id', $comment_id->id)->delete();
+        
+        return $deleteComment;
     }
 
     public function showLikes($id)
     {
         $post = Post::find($id);
         $likes = Like::where('post_id', $post->id)->where('like', 1)->count();
-        return $likes;
+
+        return $likes . ' likes.';
     }
 
+    public function like($id)
+    {
+        $post = Post::find($id);
+        $likes = Like::where('user_id', Auth::id())->where('post_id', $post->id)->count();
+        if($likes == 0){
+            $like = new Like();
+            $like->post_id = $post->id;
+            $like->user_id = Auth::id();
+            $like->like = 1;
+            $like->save();
+            
+            return $like;
+            
+        } else{
+            $likes = Like::where('user_id', Auth::id())->where('post_id', $post->id)->where('like', 1)->count();
+            if($likes != 0){
+                $likeOrUnlike = Like::where('user_id', Auth::id())->where('post_id', $post->id)->where('like', 1)->update(array('like' => 0));
 
+                return 'ciee d unlike';
+            }else{
+                $likeOrUnlike = Like::where('user_id', Auth::id())->where('post_id', $post->id)->where('like', 0)->update(array('like' => 1));
+
+                return 'ciee like lagi';
+            }
+        }
+        
+    }
 
 }

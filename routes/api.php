@@ -39,8 +39,9 @@ Route::group(['prefix' => 'v1'], function(){
 
 		Route::post('post/{id}/addComment', 'PostController@addComment');
 		Route::get('post/{id}/comments', 'PostController@showComments');
-		Route::delete('post/{id}/deleteComments', 'PostController@deleteComments');
+		Route::delete('post/{id}/deleteComment/{comment_id}', 'PostController@deleteComment');
 		Route::get('post/{id}/likes', 'PostController@showLikes');
+		Route::post('post/{id}/like', 'PostController@like');
 	});
 
 });

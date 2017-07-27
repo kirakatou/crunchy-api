@@ -21,7 +21,7 @@ class CreateLikesTable extends Migration
             $table->integer('post_id')->unsigned();
             $table->foreign('post_id')->references('id')->on('posts')
                   ->onUpdate('cascade')->onDelete('cascade');
-            $table->boolean('like')->default(0);
+            $table->boolean('like');
             $table->timestamps();
         });
     }
