@@ -75,7 +75,11 @@ class TitleController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $title = Title::findOrFail($id);
+        $title->level = $request->level;
+        $title->name = $request->name;
+        $title->save();
+        return $title;
     }
 
     /**
@@ -86,6 +90,6 @@ class TitleController extends Controller
      */
     public function destroy($id)
     {
-        //
+        
     }
 }
