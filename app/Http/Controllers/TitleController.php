@@ -91,7 +91,7 @@ class TitleController extends Controller
     public function destroy($id)
     {
         $title = Title::findOrFail($id);
-        $title->delete()
+        $title->delete();
         return $title;
     }
 }
