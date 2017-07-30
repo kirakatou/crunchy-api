@@ -74,7 +74,10 @@ class ReportCategoryController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $report = ReportCategory::findOrFail($id);
+        $report->name = $request->name;
+        $report->save();
+        return $report;
     }
 
     /**
