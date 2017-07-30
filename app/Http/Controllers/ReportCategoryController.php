@@ -88,6 +88,8 @@ class ReportCategoryController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $report = ReportCategory::findOrFail($id);
+        $report->delete();
+        return $report;
     }
 }
