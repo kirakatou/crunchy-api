@@ -37,7 +37,10 @@ class ReportCategoryController extends Controller
      */
     public function store(Request $request)
     {
-        
+        $report = new ReportCategory();
+        $report->name = $request->name;
+        $report->save();
+        return $report;
     }
 
     /**
