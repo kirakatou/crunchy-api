@@ -15,6 +15,7 @@ class CreateReportCategoriesTable extends Migration
     {
         Schema::create('report_categories', function (Blueprint $table) {
             $table->increments('id');
+            $table->string('name');
             $table->timestamps();
         });
     }
