@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use Auth;
+use App\ReportCategory;
 use Illuminate\Http\Request;
 
 class ReportCategoryController extends Controller
@@ -13,7 +15,8 @@ class ReportCategoryController extends Controller
      */
     public function index()
     {
-        //
+        $reports = ReportCategory::paginate();
+        return $reports;
     }
 
     /**
@@ -34,7 +37,7 @@ class ReportCategoryController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        
     }
 
     /**
