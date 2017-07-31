@@ -90,6 +90,61 @@ class RegisterController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
+
+    /**
+        * @SWG\Post(
+        *   path="/api/v1/register",
+        *   summary="Register new User.",
+        *   produces={"application/json"},
+        *   consumes={"application/json"},
+        *   tags={"register"},
+        *       @SWG\Response(
+        *           response=200,
+        *           description="User token.",
+        *           @SWG\Property(
+        *               property="token",
+        *               type="string"
+        *               )
+        *       ),
+        *       @SWG\Response(
+        *           response=401,
+        *           description="Unauthorized action."
+        *       ),
+        *       @SWG\Parameter(
+        *           name="body",
+        *           in="body",
+        *           required=true,
+        *           description="Haven't an account? Register here!",
+        *           type="string",
+        *           @SWG\Schema(
+        *               @SWG\Property(
+        *                   property="username",
+        *                   type="string"
+        *               ),
+        *               @SWG\Property(
+        *                   property="name",
+        *                   type="string"
+        *               ),
+        *               @SWG\Property(
+        *                   property="password",
+        *                   type="string"
+        *               ),
+        *               @SWG\Property(
+        *                   property="password_confirmation",
+        *                   type="string"
+        *               ),
+        *               @SWG\Property(
+        *                   property="email",
+        *                   type="string"
+        *               ),   
+        *               @SWG\Property(
+        *                   property="gender",
+        *                   type="boolean"
+        *               ),
+        *           )
+        *      )
+        * )
+        */     
     public function register(Request $request)
     {
         $this->validator($request->all())->validate();
