@@ -137,37 +137,30 @@ class PostController extends Controller
         $post = Post::find($id);
         $comment = Comment::find($comment_id);
         $checkPost = Post::where('user_id', Auth::id())->count();
-        $checkComment = Comment::where('user_id', Auth::id())
-                               ->where('post_id', $post->id)
-                               ->where('user_id','!=', $post->user_id)
-                               ->count();
-        
-        if($checkPost != 0)
-        {
+        $checkComment = Comment::where('user_id', '!=', Auth::id())->where('post_id', $post->id)->where('user_id', $post->user_id)->count();
+        if($checkPost != 0 && $checkComment != 0){ 
             $deleteComment = Comment::where('id', $comment->id)->delete();
-            
-            return $deleteComment;
-        } 
-        else if($checkPost == 0 && $checkComment != 0)
-        {
-            $deleteComment = Comment::where('id', $comment->id)
-                                    ->where('user_id', Auth::id())
-                                    ->delete();
-            return $deleteComment;
+            echo "ini postingan anda dan comment anda";
+        }else if($checkPost == 0 && $checkComment != 0){
+            $deleteComment = Comment::where('id', $comment->id)->delete();
+            echo "ini bukan postingan anda tapi ini comment anda";
+        }else{
+            echo "ini bukan comment dan postingan anda";
         }
-        else if($checkPost == 0 && $checkComment == 0)
-        {
-            return null;
-        }
+        return $checkPost;
+
+        // $post = Post::find($id);
+        // $comment_id = Comment::find($comment_id); 
+        // $deleteComment = Comment::where('id', $comment_id->id)->delete();
+        
+        // return $deleteComment;
         
     }
 
     public function showLikes($id)
     {
         $post = Post::find($id);
-        $likes = Like::where('post_id', $post->id)
-                     ->where('like', 1)
-                     ->count();
+        $likes = Like::where('post_id', $post->id)->where('like', 1)->count();
 
         return $likes . ' likes.';
     }
@@ -175,12 +168,8 @@ class PostController extends Controller
     public function like($id)
     {
         $post = Post::find($id);
-        $likes = Like::where('user_id', Auth::id())
-                     ->where('post_id', $post->id)
-                     ->count();
-
-        if($likes == 0)
-        {
+        $likes = Like::where('user_id', Auth::id())->where('post_id', $post->id)->count();
+        if($likes == 0){
             $like = new Like();
             $like->post_id = $post->id;
             $like->user_id = Auth::id();
@@ -188,31 +177,17 @@ class PostController extends Controller
             $like->save();
             
             return $like;
-        } 
-        else
-        {
-            $likes = Like::where('user_id', Auth::id())
-                         ->where('post_id', $post->id)
-                         ->where('like', 1)
-                         ->count();
             
-            if($likes != 0)
-            {
-                $likeOrUnlike = Like::where('user_id', Auth::id())
-                                    ->where('post_id', $post->id)
-                                    ->where('like', 1)
-                                    ->update(array('like' => 0));
+        } else{
+            $likes = Like::where('user_id', Auth::id())->where('post_id', $post->id)->where('like', 1)->count();
+            if($likes != 0){
+                $likeOrUnlike = Like::where('user_id', Auth::id())->where('post_id', $post->id)->where('like', 1)->update(array('like' => 0));
 
-                return $likeOrUnlike;
-            }
-            else
-            {
-                $likeOrUnlike = Like::where('user_id', Auth::id())
-                                    ->where('post_id', $post->id)
-                                    ->where('like', 0)
-                                    ->update(array('like' => 1));
+                return 'ciee d unlike';
+            }else{
+                $likeOrUnlike = Like::where('user_id', Auth::id())->where('post_id', $post->id)->where('like', 0)->update(array('like' => 1));
 
-                return $likeOrUnlike;
+                return 'ciee like lagi';
             }
         }
         
