@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Auth;
 
 use JWTAuth;
 use Tymon\JWTAuth\Exceptions\JWTException;
+use App\User;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
@@ -40,6 +41,45 @@ class LoginController extends Controller
         $this->middleware('guest')->except('logout');
     }
 
+
+      /**
+        * @SWG\Post(
+        *   path="/api/v1/login",
+        *   summary="Authenticate User.",
+        *   produces={"application/json"},
+        *   consumes={"application/json"},
+        *   tags={"login"},
+        *       @SWG\Response(
+        *           response=200,
+        *           description="User token.",
+        *           @SWG\Property(
+        *               property="token",
+        *               type="string"
+        *               )
+        *       ),
+        *       @SWG\Response(
+        *           response=401,
+        *           description="Unauthorized action."
+        *       ),
+        *       @SWG\Parameter(
+        *           name="body",
+        *           in="body",
+        *           required=true,
+        *           description="You need to login first!",
+        *           type="string",
+        *           @SWG\Schema(
+        *               @SWG\Property(
+        *                   property="username",
+        *                   type="string"
+        *               ),
+        *               @SWG\Property(
+        *                   property="password",
+        *                   type="string"
+        *               )   
+        *           )
+        *      )
+        * )
+        */
     public function authenticate(Request $request)
     {
         // grab credentials from the request
