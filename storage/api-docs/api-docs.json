@@ -2,9 +2,10 @@
     "swagger": "2.0",
     "info": {
         "title": "Crunchy API",
+        "description": "This is a sample of Crunchy API",
         "contact": {
             "name": "SmallCorridor",
-            "url": "https://uph.edu"
+            "email": "smallcorridor@gmail.com"
         },
         "version": "1.0"
     },
@@ -38,7 +39,8 @@
                                     "type": "string"
                                 },
                                 "password": {
-                                    "type": "string"
+                                    "type": "string",
+                                    "format": "password"
                                 }
                             }
                         },
@@ -86,10 +88,12 @@
                                     "type": "string"
                                 },
                                 "password": {
-                                    "type": "string"
+                                    "type": "string",
+                                    "format": "password"
                                 },
                                 "password_confirmation": {
-                                    "type": "string"
+                                    "type": "string",
+                                    "format": "password"
                                 },
                                 "email": {
                                     "type": "string"
@@ -228,9 +232,9 @@
                     {
                         "name": "id",
                         "in": "path",
+                        "description": "Please enter the categoryId",
                         "required": true,
-                        "type": "integer",
-                        "format": "int32"
+                        "type": "integer"
                     }
                 ],
                 "responses": {
@@ -243,11 +247,11 @@
                             }
                         }
                     },
-                    "401": {
-                        "description": "Unauthorized action."
-                    },
                     "400": {
                         "description": "Invalid ID."
+                    },
+                    "401": {
+                        "description": "Unauthorized action."
                     },
                     "404": {
                         "description": "Category not found."
@@ -258,7 +262,7 @@
                 "tags": [
                     "Category"
                 ],
-                "summary": "Update Category.",
+                "summary": "Update the Category resource.",
                 "consumes": [
                     "application/json"
                 ],
@@ -277,9 +281,9 @@
                     {
                         "name": "id",
                         "in": "path",
+                        "description": "Please enter the categoryId",
                         "required": true,
-                        "type": "integer",
-                        "format": "int32"
+                        "type": "integer"
                     },
                     {
                         "name": "body",
@@ -315,11 +319,236 @@
                     "400": {
                         "description": "Invalid ID."
                     },
+                    "401": {
+                        "description": "Unauthorized action."
+                    },
                     "404": {
                         "description": "Category not found."
+                    }
+                }
+            },
+            "delete": {
+                "tags": [
+                    "Category"
+                ],
+                "summary": "Remove the Category resource.",
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "Authorization",
+                        "in": "header",
+                        "description": "Example = Bearer(space)'your_token'",
+                        "required": true,
+                        "type": "string",
+                        "default": "Bearer"
                     },
-                    "405": {
-                        "description": "Validation exception."
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "Please enter the categoryId",
+                        "required": true,
+                        "type": "integer"
+                    }
+                ],
+                "responses": {
+                    "204": {
+                        "description": "Category resource deleted."
+                    },
+                    "401": {
+                        "description": "Unauthorized action."
+                    },
+                    "404": {
+                        "description": "Category not found."
+                    }
+                }
+            }
+        },
+        "/api/v1/post": {
+            "get": {
+                "tags": [
+                    "Post"
+                ],
+                "summary": "Retrieves the collection of Post resources.",
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "Authorization",
+                        "in": "header",
+                        "description": "Example = Bearer(space)'your_token'",
+                        "required": true,
+                        "type": "string",
+                        "default": "Bearer"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Posts collection.",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/post"
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized action."
+                    }
+                }
+            }
+        },
+        "/api/v1/post/{postId}/addComment": {
+            "post": {
+                "tags": [
+                    "Comment"
+                ],
+                "summary": "Add comment in posting image.",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "Authorization",
+                        "in": "header",
+                        "description": "Example = Bearer(space)'your_token'",
+                        "required": true,
+                        "type": "string",
+                        "default": "Bearer"
+                    },
+                    {
+                        "name": "postId",
+                        "in": "path",
+                        "description": "Please enter the postId",
+                        "required": true,
+                        "type": "integer"
+                    },
+                    {
+                        "name": "body",
+                        "in": "body",
+                        "description": "Comment that needs to be added into posting image",
+                        "required": true,
+                        "schema": {
+                            "properties": {
+                                "comment": {
+                                    "type": "string"
+                                }
+                            }
+                        },
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Comment has successfully added.",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/comment"
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized action."
+                    }
+                }
+            }
+        },
+        "/api/v1/post/{postId}/comments": {
+            "get": {
+                "tags": [
+                    "Comment"
+                ],
+                "summary": "Show all comments by Post's Id.",
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "Authorization",
+                        "in": "header",
+                        "description": "Example = Bearer(space)'your_token'",
+                        "required": true,
+                        "type": "string",
+                        "default": "Bearer"
+                    },
+                    {
+                        "name": "postId",
+                        "in": "path",
+                        "description": "Please enter the postId",
+                        "required": true,
+                        "type": "integer"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "This is the data that you search.",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/comment"
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Invalid ID."
+                    },
+                    "401": {
+                        "description": "Unauthorized action."
+                    },
+                    "404": {
+                        "description": "Post ID not found."
+                    }
+                }
+            }
+        },
+        "/api/v1/post/{postId}/deleteComment/{commentId}": {
+            "delete": {
+                "tags": [
+                    "Comment"
+                ],
+                "summary": "Remove the comment from posting image.",
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "Authorization",
+                        "in": "header",
+                        "description": "Example = Bearer(space)'your_token'",
+                        "required": true,
+                        "type": "string",
+                        "default": "Bearer"
+                    },
+                    {
+                        "name": "postId",
+                        "in": "path",
+                        "description": "Please enter the postId",
+                        "required": true,
+                        "type": "integer"
+                    },
+                    {
+                        "name": "commentId",
+                        "in": "path",
+                        "description": "Please enter the commentId",
+                        "required": true,
+                        "type": "integer"
+                    }
+                ],
+                "responses": {
+                    "204": {
+                        "description": "Comment has been deleted."
+                    },
+                    "401": {
+                        "description": "Unauthorized action."
+                    },
+                    "404": {
+                        "description": "Post ID or Comment ID not found."
                     }
                 }
             }
@@ -356,6 +585,71 @@
                 "category": {
                     "type": "boolean",
                     "default": true
+                },
+                "create_at": {
+                    "type": "string"
+                },
+                "update_at": {
+                    "type": "string"
+                }
+            }
+        },
+        "comment": {
+            "properties": {
+                "id": {
+                    "type": "integer",
+                    "format": "int32"
+                },
+                "user_id": {
+                    "type": "integer",
+                    "format": "int32"
+                },
+                "post_id": {
+                    "type": "integer",
+                    "format": "int32"
+                },
+                "comment": {
+                    "type": "string"
+                },
+                "create_at": {
+                    "type": "string"
+                },
+                "update_at": {
+                    "type": "string"
+                }
+            }
+        },
+        "post": {
+            "properties": {
+                "id": {
+                    "type": "integer",
+                    "format": "int32"
+                },
+                "user_id": {
+                    "type": "integer",
+                    "format": "int32"
+                },
+                "merchant_id": {
+                    "type": "integer",
+                    "format": "int32"
+                },
+                "path": {
+                    "type": "string"
+                },
+                "description": {
+                    "type": "string"
+                },
+                "taste": {
+                    "type": "number",
+                    "format": "double"
+                },
+                "price": {
+                    "type": "number",
+                    "format": "double"
+                },
+                "service": {
+                    "type": "number",
+                    "format": "double"
                 },
                 "create_at": {
                     "type": "string"

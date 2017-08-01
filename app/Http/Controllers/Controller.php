@@ -15,9 +15,10 @@ use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
      *   @SWG\Info(
      *       version="1.0",
      *       title="Crunchy API",
+     *       description="This is a sample of Crunchy API",
      *       @SWG\Contact(
      *           name="SmallCorridor",
-     *           url="https://uph.edu"
+     *           email="smallcorridor@gmail.com"
      *       ),
      *   ),
      *   @SWG\Definition(
