@@ -12,6 +12,7 @@
         "tymon/jwt-auth": "^0.5.12"
     },
     "require-dev": {
+        "deployer/deployer": "^5.1",
         "fzaninotto/faker": "~1.4",
         "mockery/mockery": "0.9.*",
         "phpunit/phpunit": "~5.7"

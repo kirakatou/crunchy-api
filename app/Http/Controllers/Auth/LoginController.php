@@ -74,7 +74,8 @@ class LoginController extends Controller
         *               ),
         *               @SWG\Property(
         *                   property="password",
-        *                   type="string"
+        *                   type="string",
+        *                   format="password"
         *               )   
         *           )
         *      )

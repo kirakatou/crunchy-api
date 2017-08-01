@@ -127,11 +127,13 @@ class RegisterController extends Controller
         *               ),
         *               @SWG\Property(
         *                   property="password",
-        *                   type="string"
+        *                   type="string",
+        *                   format="password"
         *               ),
         *               @SWG\Property(
         *                   property="password_confirmation",
-        *                   type="string"
+        *                   type="string",
+        *                   format="password"
         *               ),
         *               @SWG\Property(
         *                   property="email",

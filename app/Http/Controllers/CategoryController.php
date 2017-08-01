@@ -44,7 +44,7 @@ class CategoryController extends Controller
     public function index()
     {
         $categories = Category::paginate();
-        return $categories;
+        return response()->json($categories->toArray());
     }
 
     /**
@@ -127,7 +127,7 @@ class CategoryController extends Controller
         $category->icon = $request->icon;
         $category->category = $request->category;
         $category->save();
-        return $category;
+        return response()->json($category);
     }
 
     /**
@@ -152,12 +152,12 @@ class CategoryController extends Controller
      *          )
      *      ),
      *      @SWG\Response(
-     *          response=401,
-     *          description="Unauthorized action."
-     *      ),
-     *      @SWG\Response(
      *          response=400,
      *          description="Invalid ID."
+     *      ),
+     *      @SWG\Response(
+     *          response=401,
+     *          description="Unauthorized action."
      *      ),
      *      @SWG\Response(
      *          response=404,
@@ -174,16 +174,19 @@ class CategoryController extends Controller
      *      @SWG\Parameter(
      *           name="id",
      *           in="path",
+     *           description="Please enter the categoryId",
      *           required=true, 
-     *           type="integer",
-     *           format="int32"
+     *           type="integer"
      *      )              
      * )
      */
     public function show($id)
     {
         $category = Category::find($id);
-        return $category;
+        if(empty($category)){
+            return response()->json(['message' => 'Category ID not found'], 404);
+        }
+        return response()->json($category);
     }
 
     /**
@@ -208,7 +211,7 @@ class CategoryController extends Controller
     /**
      * @SWG\Put(
      *      path="/api/v1/category/{id}",
-     *      summary="Update Category.",
+     *      summary="Update the Category resource.",
      *      produces={"application/json"},
      *      consumes={"application/json"},
      *      tags={"Category"},
@@ -225,12 +228,12 @@ class CategoryController extends Controller
      *          description="Invalid ID."
      *      ),
      *      @SWG\Response(
-     *          response=404,
-     *          description="Category not found."
+     *          response=401,
+     *          description="Unauthorized action."
      *      ),
      *      @SWG\Response(
-     *          response=405,
-     *          description="Validation exception."
+     *          response=404,
+     *          description="Category not found."
      *      ),
      *      @SWG\Parameter(
      *          name="Authorization",
@@ -243,9 +246,9 @@ class CategoryController extends Controller
      *      @SWG\Parameter(
      *           name="id",
      *           in="path",
+     *           description="Please enter the categoryId",
      *           required=true, 
-     *           type="integer",
-     *           format="int32"
+     *           type="integer"
      *      ),
      *      @SWG\Parameter(
      *           name="body",
@@ -274,11 +277,14 @@ class CategoryController extends Controller
     public function update(Request $request, $id)
     {
         $category = Category::find($id);
+        if(empty($category)){
+            return response()->json(['message' => 'Category ID not found'], 404);
+        }
         $category->name = $request->name;
         $category->icon = $request->icon;
         $category->category = $request->category;
         $category->save();
-        return $category;
+        return response()->json($category);
     }
 
     /**
@@ -287,10 +293,51 @@ class CategoryController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
+
+    /**
+     * @SWG\Delete(
+     *      path="/api/v1/category/{id}",
+     *      summary="Remove the Category resource.",
+     *      produces={"application/json"},
+     *      tags={"Category"},
+     *      @SWG\Response(
+     *          response=204,
+     *          description="Category resource deleted."
+     *      ),
+     *      @SWG\Response(
+     *          response=401,
+     *          description="Unauthorized action."
+     *      ),
+     *      @SWG\Response(
+     *          response=404,
+     *          description="Category not found."
+     *      ),
+     *      @SWG\Parameter(
+     *          name="Authorization",
+     *          description="Example = Bearer(space)'your_token'",
+     *          in="header",
+     *          required=true,
+     *          type="string",
+     *          default="Bearer",
+     *      ),
+     *      @SWG\Parameter(
+     *           name="id",
+     *           in="path",
+     *           description="Please enter the categoryId",
+     *           required=true, 
+     *           type="integer"
+     *      )              
+     * )
+     */
     public function destroy($id)
     {
         $category = Category::find($id);
+        if(empty($category)){
+            return response()->json(['message' => 'Category ID not found'], 404);
+        }
         $category->delete();
-        return $category;
+        return response()->json([
+            'message' => 'Category has been deleted'
+            ], 204);
     }
 }

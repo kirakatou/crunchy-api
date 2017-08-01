@@ -18,6 +18,35 @@ class PostController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
+
+    /**
+     * @SWG\Get(
+     *      path="/api/v1/post",
+     *      summary="Retrieves the collection of Post resources.",
+     *      produces={"application/json"},
+     *      tags={"Post"},
+     *      @SWG\Response(
+     *          response=200,
+     *          description="Posts collection.",
+     *          @SWG\Schema(
+     *              type="array",
+     *              @SWG\Items(ref="#/definitions/post")
+     *          )
+     *      ),
+     *      @SWG\Response(
+     *          response=401,
+     *          description="Unauthorized action."
+     *      ),
+     *      @SWG\Parameter(
+     *          name="Authorization",
+     *          description="Example = Bearer(space)'your_token'",
+     *          in="header",
+     *          required=true,
+     *          type="string",
+     *          default="Bearer" 
+     *      )    
+     * )
+     */
     public function index()
     {
         $posts = Post::paginate();
@@ -112,30 +141,179 @@ class PostController extends Controller
         //
     }
 
+
+    /**
+     * @SWG\Post(
+     *      path="/api/v1/post/{postId}/addComment",
+     *      summary="Add comment in posting image.",
+     *      produces={"application/json"},
+     *      consumes={"application/json"},
+     *      tags={"Comment"},
+     *      @SWG\Response(
+     *          response=200,
+     *          description="Comment has successfully added.",
+     *          @SWG\Schema(
+     *              type="array",
+     *              @SWG\Items(ref="#/definitions/comment")
+     *          )
+     *      ),
+     *      @SWG\Response(
+     *          response=401,
+     *          description="Unauthorized action."
+     *      ),
+     *      @SWG\Parameter(
+     *          name="Authorization",
+     *          description="Example = Bearer(space)'your_token'",
+     *          in="header",
+     *          required=true,
+     *          type="string",
+     *          default="Bearer",
+     *      ),
+     *      @SWG\Parameter(
+     *           name="postId",
+     *           in="path",
+     *           description="Please enter the postId",
+     *           required=true, 
+     *           type="integer"
+     *      ),  
+     *      @SWG\Parameter(
+     *           name="body",
+     *           in="body",
+     *           required=true,
+     *           description="Comment that needs to be added into posting image", 
+     *           type="string",
+     *           @SWG\Schema(
+     *               @SWG\Property(
+     *                   property="comment",
+     *                   type="string"
+     *               ) 
+     *           )
+     *      )             
+     * )
+     */
     public function addComment(Request $request, $id)
     {
         $post = Post::find($id);
+        if(empty($post)){
+            return response()->json(['message' => 'Post ID not found'], 404);
+        }
         $comment = new Comment();
         $comment->post_id = $post->id;
         $comment->user_id = Auth::id();
         $comment->comment = $request->comment;
         $comment->save();
 
-        return $comment;
+        return response()->json($comment);
     }
 
+    /**
+     * @SWG\Get(
+     *      path="/api/v1/post/{postId}/comments",
+     *      summary="Show all comments by Post's Id.",
+     *      produces={"application/json"},
+     *      tags={"Comment"},
+     *      @SWG\Response(
+     *          response=200,
+     *          description="This is the data that you search.",
+     *          @SWG\Schema(
+     *              type="array",
+     *              @SWG\Items(ref="#/definitions/comment")
+     *          )
+     *      ),
+     *      @SWG\Response(
+     *          response=400,
+     *          description="Invalid ID."
+     *      ),
+     *      @SWG\Response(
+     *          response=401,
+     *          description="Unauthorized action."
+     *      ),
+     *      @SWG\Response(
+     *          response=404,
+     *          description="Post ID not found."
+     *      ),
+     *      @SWG\Parameter(
+     *          name="Authorization",
+     *          description="Example = Bearer(space)'your_token'",
+     *          in="header",
+     *          required=true,
+     *          type="string",
+     *          default="Bearer",
+     *      ),
+     *      @SWG\Parameter(
+     *           name="postId",
+     *           description="Please enter the postId",
+     *           in="path",
+     *           required=true, 
+     *           type="integer"
+     *      )              
+     * )
+     */
     public function showComments($id)
     {
         $post = Post::find($id);
+        if(empty($post)){
+            return response()->json(['message' => 'Post ID not found'], 404);
+        }
         $comments = Comment::where('post_id', $post->id)->get();
         
-        return $comments;
+        return response()->json($comments->toArray());
     }
 
+    /**
+     * @SWG\Delete(
+     *      path="/api/v1/post/{postId}/deleteComment/{commentId}",
+     *      summary="Remove the comment from posting image.",
+     *      produces={"application/json"},
+     *      tags={"Comment"},
+     *      @SWG\Response(
+     *          response=204,
+     *          description="Comment has been deleted."
+     *      ),
+     *      @SWG\Response(
+     *          response=401,
+     *          description="Unauthorized action."
+     *      ),
+     *      @SWG\Response(
+     *          response=404,
+     *          description="Post ID or Comment ID not found."
+     *      ),
+     *      @SWG\Parameter(
+     *          name="Authorization",
+     *          description="Example = Bearer(space)'your_token'",
+     *          in="header",
+     *          required=true,
+     *          type="string",
+     *          default="Bearer",
+     *      ),
+     *      @SWG\Parameter(
+     *           name="postId",
+     *           description="Please enter the postId",
+     *           in="path",
+     *           required=true, 
+     *           type="integer"
+     *      ),
+     *      @SWG\Parameter(
+     *           name="commentId",
+     *           description="Please enter the commentId",
+     *           in="path",
+     *           required=true, 
+     *           type="integer"
+     *      )             
+     * )
+     */
     public function deleteComment($id, $comment_id)
     {   
         $post = Post::find($id);
+        if(empty($post)){
+            return response()->json(['message' => 'Post ID not found'], 404);
+        }
+
         $comment = Comment::find($comment_id);
+        if(empty($comment)){
+            return response()->json(['message' => 'Comment ID not found'], 404);
+        }
+
         $checkPost = Post::where('user_id', Auth::id())->count();
         $checkComment = Comment::where('user_id', Auth::id())
                                ->where('post_id', $post->id)
@@ -146,18 +324,18 @@ class PostController extends Controller
         {
             $deleteComment = Comment::where('id', $comment->id)->delete();
             
-            return $deleteComment;
+            return response()->json(['message' => 'The comment has been deleted'], 204);
         } 
         else if($checkPost == 0 && $checkComment != 0)
         {
             $deleteComment = Comment::where('id', $comment->id)
                                     ->where('user_id', Auth::id())
                                     ->delete();
-            return $deleteComment;
+            return response()->json(['message' => 'Your comment has been deleted'], 204);
         }
         else if($checkPost == 0 && $checkComment == 0)
         {
-            return null;
+            return response()->json(['message' => 'This is not your comment!'], 403);
         }
         
     }
