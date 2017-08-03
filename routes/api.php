@@ -30,22 +30,27 @@ Route::group(['prefix' => 'v1'], function(){
 			'create', 'edit'
 		]]);
 		
-		Route::resource('title', 'TitleController', ['except' => [
-			'create', 'edit'
-		]]);
-
-		Route::resource('category', 'CategoryController', ['except' => [
-			'create', 'edit'
-		]]);
-
-		Route::resource('reportcategory', 'ReportCategoryController', ['except' => [
-			'create', 'edit'
-		]]);
 		Route::post('post/{id}/addComment', 'PostController@addComment');
 		Route::get('post/{id}/comments', 'PostController@showComments');
 		Route::delete('post/{id}/deleteComment/{comment_id}', 'PostController@deleteComment');
 		Route::get('post/{id}/totalLikes', 'PostController@showTotalLikes');
 		Route::post('post/{id}/like', 'PostController@like');
+
+		Route::group(['middleware' => 'jwt.auth'], function(){
+
+			Route::resource('title', 'TitleController', ['except' => [
+				'create', 'edit'
+			]]);
+
+			Route::resource('category', 'CategoryController', ['except' => [
+				'create', 'edit'
+			]]);
+
+			Route::resource('reportcategory', 'ReportCategoryController', ['except' => [
+				'create', 'edit'
+			]]);
+			
+		});
 	});
 
 });
