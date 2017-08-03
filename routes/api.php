@@ -35,14 +35,12 @@ Route::group(['prefix' => 'v1'], function(){
 		Route::delete('post/{id}/deleteComment/{comment_id}', 'PostController@deleteComment');
 		Route::get('post/{id}/totalLikes', 'PostController@showTotalLikes');
 		Route::post('post/{id}/like', 'PostController@like');
-<<<<<<< HEAD
 		Route::post('follow/{user_id}', 'UserFollowerController@userDoFollow');
 		Route::get('following', 'UserFollowerController@showFollowing');
 		Route::get('followers', 'UserFollowerController@showFollowers');
 		Route::get('followers/{user_id}', 'UserFollowerController@userFollowers');
 		Route::get('following/{user_id}', 'UserFollowerController@userFollowing');
 
-=======
 		Route::get('post/{id}/report', 'PostController@report');
 		Route::post('post/{id}/report/{report_id}', 'PostController@postReport');
 
@@ -70,7 +68,6 @@ Route::group(['prefix' => 'v1'], function(){
 			
 		});
 		
->>>>>>> 5cffb50a32aabe6925189705bdf9bf237e85d33f
 	});
 
 });
