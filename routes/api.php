@@ -55,6 +55,10 @@ Route::group(['prefix' => 'v1'], function(){
 			Route::resource('coupon', 'CouponController', ['except' => [
 				'create', 'edit'
 			]]);
+
+			Route::resource('admin', 'AdminController', ['except' => [
+				'create', 'edit'
+			]]);
 			
 		});
 		
