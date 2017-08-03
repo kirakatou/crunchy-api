@@ -35,4 +35,12 @@ class User extends Authenticatable
     public function admin() {
         return $this->belongsTo('App\Admin');
     }
+
+    public function post() {
+        return $this->hasMany('App\Post');
+    }
+
+    public function point() {
+        return $this->hasMany('App\Point');
+    }
 }

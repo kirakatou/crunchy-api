@@ -44,7 +44,14 @@ Route::group(['prefix' => 'v1'], function(){
 		Route::get('post/{id}/report', 'PostController@report');
 		Route::post('post/{id}/report/{report_id}', 'PostController@postReport');
 
+<<<<<<< HEAD
 		Route::group(['middleware' => 'admin', 'prefix' => 'food'], function(){	
+=======
+		Route::get('/{id}', 'ProfileController@index');
+
+		Route::group(['middleware' => 'admin', 'prefix' => 'food'], function(){
+
+>>>>>>> 9984fef9ab1187bd2f860fbe1e9806edd5b5f35d
 			Route::resource('title', 'TitleController', ['except' => [
 				'create', 'edit'
 			]]);
