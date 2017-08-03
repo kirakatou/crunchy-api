@@ -182,7 +182,7 @@ class CategoryController extends Controller
      */
     public function show($id)
     {
-        $category = Category::find($id);
+        $category = Category::findOrFail($id);
         if(empty($category)){
             return response()->json(['message' => 'Category ID not found'], 404);
         }
@@ -276,7 +276,7 @@ class CategoryController extends Controller
 
     public function update(Request $request, $id)
     {
-        $category = Category::find($id);
+        $category = Category::findOrFail($id);
         if(empty($category)){
             return response()->json(['message' => 'Category ID not found'], 404);
         }
@@ -331,7 +331,7 @@ class CategoryController extends Controller
      */
     public function destroy($id)
     {
-        $category = Category::find($id);
+        $category = Category::findOrFail($id);
         if(empty($category)){
             return response()->json(['message' => 'Category ID not found'], 404);
         }

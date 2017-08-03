@@ -129,7 +129,31 @@ class PostController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $this->validate($request, [
+            'taste' => 'numeric|required',
+            'price' => 'numeric|required',
+            'service' => 'numeric|required',
+        ]);
+
+        $post = Post::findOrFail($id);
+        if(Auth::user()->id == $post->user_id){
+            if($request->hasFile('image')){
+                if($request->image->isValid()){
+                    $path = $request->image->store('public/post/' . Auth::user()->id);
+                    $post->path = $path;
+                }
+            }
+            $post->user()->associate(Auth::user()->id);
+            $post->merchant()->associate($request->merchant_id);
+            $post->description = $request->description;
+            $post->taste = $request->taste;
+            $post->price = $request->price;
+            $post->service = $request->service;
+            $post->save();
+            return $post;
+        }else {
+            return response()->json(['message' => 'Unauthorized Access'], 401);
+        }
     }
 
     /**
@@ -195,7 +219,7 @@ class PostController extends Controller
      */
     public function addComment(Request $request, $id)
     {
-        $post = Post::find($id);
+        $post = Post::findOrFail($id);
         if(empty($post)){
             return response()->json(['message' => 'Post ID not found'], 404);
         }
@@ -253,7 +277,7 @@ class PostController extends Controller
      */
     public function showComments($id)
     {
-        $post = Post::find($id);
+        $post = Post::findOrFail($id);
         if(empty($post)){
             return response()->json(['message' => 'Post ID not found'], 404);
         }
@@ -306,12 +330,12 @@ class PostController extends Controller
      */
     public function deleteComment($id, $comment_id)
     {   
-        $post = Post::find($id);
+        $post = Post::findOrFail($id);
         if(empty($post)){
             return response()->json(['message' => 'Post ID not found'], 404);
         }
 
-        $comment = Comment::find($comment_id);
+        $comment = Comment::findOrFail($comment_id);
         if(empty($comment)){
             return response()->json(['message' => 'Comment ID not found'], 404);
         }
@@ -342,19 +366,106 @@ class PostController extends Controller
         
     }
 
-    public function showLikes($id)
+    /**
+     * @SWG\Get(
+     *      path="/api/v1/post/{postId}/totalLikes",
+     *      summary="Show total likes by Post's Id.",
+     *      produces={"application/json"},
+     *      tags={"Like"},
+     *      @SWG\Response(
+     *          response=200,
+     *          description="This is the data that you search.",
+     *          @SWG\Schema(
+     *              type="array",
+     *              @SWG\Items(ref="#/definitions/like")
+     *          )
+     *      ),
+     *      @SWG\Response(
+     *          response=400,
+     *          description="Invalid ID."
+     *      ),
+     *      @SWG\Response(
+     *          response=401,
+     *          description="Unauthorized action."
+     *      ),
+     *      @SWG\Response(
+     *          response=404,
+     *          description="Post ID not found."
+     *      ),
+     *      @SWG\Parameter(
+     *          name="Authorization",
+     *          description="Example = Bearer(space)'your_token'",
+     *          in="header",
+     *          required=true,
+     *          type="string",
+     *          default="Bearer",
+     *      ),
+     *      @SWG\Parameter(
+     *           name="postId",
+     *           description="Please enter the postId",
+     *           in="path",
+     *           required=true, 
+     *           type="integer"
+     *      )              
+     * )
+     */
+    public function showTotalLikes($id)
     {
-        $post = Post::find($id);
+        $post = Post::findOrFail($id);
+        if(empty($post)){
+            return response()->json(['message' => 'Post ID not found'], 404);
+        }
+
         $likes = Like::where('post_id', $post->id)
                      ->where('like', 1)
                      ->count();
 
-        return $likes . ' likes.';
+        return $likes . ' likes';
     }
 
+    /**
+     * @SWG\Post(
+     *      path="/api/v1/post/{postId}/like",
+     *      summary="Like or Dislike a posting image.",
+     *      produces={"application/json"},
+     *      consumes={"application/json"},
+     *      tags={"Like"},
+     *      @SWG\Response(
+     *          response=200,
+     *          description="Success.",
+     *          @SWG\Schema(
+     *              type="array",
+     *              @SWG\Items(ref="#/definitions/like")
+     *          )
+     *      ),
+     *      @SWG\Response(
+     *          response=401,
+     *          description="Unauthorized action."
+     *      ),
+     *      @SWG\Parameter(
+     *          name="Authorization",
+     *          description="Example = Bearer(space)'your_token'",
+     *          in="header",
+     *          required=true,
+     *          type="string",
+     *          default="Bearer",
+     *      ),
+     *      @SWG\Parameter(
+     *           name="postId",
+     *           in="path",
+     *           description="Please enter the postId",
+     *           required=true, 
+     *           type="integer"
+     *      )             
+     * )
+     */
     public function like($id)
     {
-        $post = Post::find($id);
+        $post = Post::findOrFail($id);
+        if(empty($post)){
+            return response()->json(['message' => 'Post ID not found'], 404);
+        }
+
         $likes = Like::where('user_id', Auth::id())
                      ->where('post_id', $post->id)
                      ->count();
@@ -367,7 +478,7 @@ class PostController extends Controller
             $like->like = 1;
             $like->save();
             
-            return $like;
+            return response()->json($like);
         } 
         else
         {
@@ -378,21 +489,21 @@ class PostController extends Controller
             
             if($likes != 0)
             {
-                $likeOrUnlike = Like::where('user_id', Auth::id())
-                                    ->where('post_id', $post->id)
-                                    ->where('like', 1)
-                                    ->update(array('like' => 0));
+                $likeOrDislike = Like::where('user_id', Auth::id())
+                                     ->where('post_id', $post->id)
+                                     ->where('like', 1)
+                                     ->update(array('like' => 0));
 
-                return $likeOrUnlike;
+                return response()->json($likeOrDislike);
             }
             else
             {
-                $likeOrUnlike = Like::where('user_id', Auth::id())
-                                    ->where('post_id', $post->id)
-                                    ->where('like', 0)
-                                    ->update(array('like' => 1));
+                $likeOrDislike = Like::where('user_id', Auth::id())
+                                     ->where('post_id', $post->id)
+                                     ->where('like', 0)
+                                     ->update(array('like' => 1));
 
-                return $likeOrUnlike;
+                return response()->json($likeOrDislike);
             }
         }
         
@@ -401,7 +512,7 @@ class PostController extends Controller
 
     public function report($id)
     {
-        $post = Post::find($id);
+        $post = Post::findOrFail($id);
         if(empty($post)){
             return response()->json(['message' => 'Post ID not found'], 404);
         }
@@ -412,7 +523,7 @@ class PostController extends Controller
 
     public function postReport(Request $request, $id, $report_id)
     {
-        $post = Post::find($id);
+        $post = Post::findOrFail($id);
         if(empty($post)){
             return response()->json(['message' => 'Post ID not found'], 404);
         }

@@ -552,6 +552,99 @@
                     }
                 }
             }
+        },
+        "/api/v1/post/{postId}/totalLikes": {
+            "get": {
+                "tags": [
+                    "Like"
+                ],
+                "summary": "Show total likes by Post's Id.",
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "Authorization",
+                        "in": "header",
+                        "description": "Example = Bearer(space)'your_token'",
+                        "required": true,
+                        "type": "string",
+                        "default": "Bearer"
+                    },
+                    {
+                        "name": "postId",
+                        "in": "path",
+                        "description": "Please enter the postId",
+                        "required": true,
+                        "type": "integer"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "This is the data that you search.",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/like"
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Invalid ID."
+                    },
+                    "401": {
+                        "description": "Unauthorized action."
+                    },
+                    "404": {
+                        "description": "Post ID not found."
+                    }
+                }
+            }
+        },
+        "/api/v1/post/{postId}/like": {
+            "post": {
+                "tags": [
+                    "Like"
+                ],
+                "summary": "Like or Dislike a posting image.",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "Authorization",
+                        "in": "header",
+                        "description": "Example = Bearer(space)'your_token'",
+                        "required": true,
+                        "type": "string",
+                        "default": "Bearer"
+                    },
+                    {
+                        "name": "postId",
+                        "in": "path",
+                        "description": "Please enter the postId",
+                        "required": true,
+                        "type": "integer"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Success.",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/like"
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized action."
+                    }
+                }
+            }
         }
     },
     "definitions": {
@@ -610,6 +703,31 @@
                 },
                 "comment": {
                     "type": "string"
+                },
+                "create_at": {
+                    "type": "string"
+                },
+                "update_at": {
+                    "type": "string"
+                }
+            }
+        },
+        "like": {
+            "properties": {
+                "id": {
+                    "type": "integer",
+                    "format": "int32"
+                },
+                "user_id": {
+                    "type": "integer",
+                    "format": "int32"
+                },
+                "post_id": {
+                    "type": "integer",
+                    "format": "int32"
+                },
+                "like": {
+                    "type": "boolean"
                 },
                 "create_at": {
                     "type": "string"
