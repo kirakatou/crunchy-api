@@ -16,12 +16,12 @@ use Illuminate\Database\Eloquent\Model;
  *   	property="user_id",
  *      type="integer",
  *      format="int32"
- *  )
+ *  ),
  *	@SWG\Property(
  *   	property="post_id",
  *      type="integer",
  *      format="int32"
- *  )
+ *  ),
  *	@SWG\Property(
  *   	property="report_id",
  *      type="integer",
