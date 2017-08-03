@@ -41,6 +41,11 @@ Route::group(['prefix' => 'v1'], function(){
 		Route::resource('reportcategory', 'ReportCategoryController', ['except' => [
 			'create', 'edit'
 		]]);
+
+		Route::resource('coupon', 'CouponController', ['except' => [
+			'create', 'edit'
+		]]);
+
 		Route::post('post/{id}/addComment', 'PostController@addComment');
 		Route::get('post/{id}/comments', 'PostController@showComments');
 		Route::delete('post/{id}/deleteComment/{comment_id}', 'PostController@deleteComment');
