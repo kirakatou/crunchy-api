@@ -10,6 +10,7 @@ use App\Like;
 use App\User;
 use App\ReportCategory;
 use App\ReportList;
+use App\Point;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
@@ -78,7 +79,6 @@ class PostController extends Controller
             'taste' => 'numeric|required',
             'price' => 'numeric|required',
             'service' => 'numeric|required',
-            'description' => 'required',
         ]);
         if($request->hasFile('image')){
             if($request->image->isValid()){
@@ -92,6 +92,19 @@ class PostController extends Controller
                 $post->price = $request->price;
                 $post->service = $request->service;
                 $post->save();
+                $point = new Point();
+                $point->user()->associate(Auth::user()->id);
+                $point->type = 'Post';
+                $point->post_id = $post->id;
+                $point->point = $point->point + 5;
+                $point->save();
+                $profile = Auth::user()->profile;
+                $profile->current_exp = $profile->current_exp + 20;
+                if($profile->current_exp >= (250 * $profile->level)){
+                    $profile->current_exp = $profile->current_exp - (250 * $profile->level);
+                    $profile->level = $profile->level + 1;
+                }
+                $profile->save();
                 return $post;
             }
         }
