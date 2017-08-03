@@ -15,6 +15,15 @@ class CreateReportListsTable extends Migration
     {
         Schema::create('report_lists', function (Blueprint $table) {
             $table->increments('id');
+            $table->integer('post_id')->unsigned();
+            $table->foreign('post_id')->references('id')->on('posts')
+                  ->onUpdate('cascade')->onDelete('cascade');
+            $table->integer('user_id')->unsigned();
+            $table->foreign('user_id')->references('id')->on('users')
+                  ->onUpdate('cascade')->onDelete('cascade');
+            $table->integer('report_id')->unsigned();
+            $table->foreign('report_id')->references('id')->on('report_categories')
+                  ->onUpdate('cascade')->onDelete('cascade');
             $table->timestamps();
         });
     }

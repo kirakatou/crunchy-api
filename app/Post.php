@@ -79,4 +79,8 @@ class Post extends Model
     	return $this->hasMany('App\Comment');
     }
 
+    public function reportlist(){
+        return $this->hasMany('App\ReportList')
+    }
+
 }

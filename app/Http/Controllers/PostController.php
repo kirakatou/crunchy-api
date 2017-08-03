@@ -8,6 +8,8 @@ use App\Post;
 use App\Comment;
 use App\Like;
 use App\User;
+use App\ReportCategory;
+use App\ReportList;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
@@ -481,6 +483,33 @@ class PostController extends Controller
             }
         }
         
+    }
+
+
+    public function report($id)
+    {
+        $post = Post::find($id);
+        if(empty($post)){
+            return response()->json(['message' => 'Post ID not found'], 404);
+        }
+        $reports = ReportCategory::get(['id', 'name']);
+        
+        return response()->json($reports->toArray());
+    }
+
+    public function postReport(Request $request, $id, $report_id)
+    {
+        $post = Post::find($id);
+        if(empty($post)){
+            return response()->json(['message' => 'Post ID not found'], 404);
+        }
+        $report = new ReportList();
+        $report->post_id = $post->id;
+        $report->user_id = Auth::id();
+        $report->report_id = $report_id;
+        $report->save();
+
+        return response()->json($report);
     }
 
 }
