@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Profile;
+use App\UserFollower;
+use Auth;
 use Illuminate\Http\Request;
 
 class ProfileController extends Controller
@@ -85,5 +87,58 @@ class ProfileController extends Controller
     public function destroy($id)
     {
         //
+    }
+
+    public function userDoFollow($id)
+    {
+        $checkUserLogin = Auth::id();
+        $checkUserAvailable = Profile::where('id', $id)->count();
+        $checkIfFollow = UserFollower::where('user_id', $id)->where('follower_id', Auth::id())->count();
+        if($checkUserAvailable != 0) 
+        {
+            if($checkUserLogin == $id)
+            {
+                echo "kok follow id sendiri??";
+            }else 
+            {
+                if($checkIfFollow == 0)
+                {
+                    $userFollower = new UserFollower();
+                    $userFollower->user_id = $id;
+                    $userFollower->follower_id = Auth::id();
+                    $userFollower->save();
+                    
+                    return response()->json(['messages' => 'Success'], 200);
+                
+                }else
+                {
+                    $userFollower = UserFollower::where('user_id', $id)
+                                          ->where('follower_id', Auth::id())
+                                          ->delete();
+
+                    return response()->json(['messages' => 'Success'], 200);                      
+                                          
+                }
+            }
+            
+        }else 
+        {
+            return response()->json(['messages' => 'User ID not found'], 404);
+        }
+
+    }
+
+    public function followers($id){
+        $profile = Profile::with('user')->findOrFail($id);
+        $followers = UserFollower::where('user_id', Auth::id())->get();
+
+        return response()->json($followers->toArray()); 
+    }
+
+    public function following($id){
+        $profile = Profile::with('user')->findOrFail($id);
+        $following = UserFollower::where('follower_id', Auth::id())->get();
+        
+        return response()->json($following->toArray()); 
     }
 }
