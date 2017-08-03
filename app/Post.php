@@ -80,7 +80,7 @@ class Post extends Model
     }
 
     public function reportlist(){
-        return $this->hasMany('App\ReportList')
+        return $this->hasMany('App\ReportList');
     }
 
 }
