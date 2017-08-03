@@ -37,7 +37,12 @@ class CouponController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $coupon = new Coupon();
+        $coupon->coupon_title = $request->coupon_title;
+        $coupon->point = $request->point;
+        $coupon->description = $request->description;
+        $coupon->save();
+        return $coupon;
     }
 
     /**
