@@ -164,8 +164,16 @@ class PostController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $post = Post::find($id);
+        if(Auth::id() == $post->user_id){
+            $post->delete();
+            return $post;
+        }else {
+            return response()->json(['message' => 'Unauthorized Access']);
+        }
+        
     }
+
 
 
     /**
