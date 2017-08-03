@@ -106,7 +106,8 @@ class PostController extends Controller
      */
     public function show($id)
     {
-        //
+        $post = Post::findOrFail($id);
+        return $post;
     }
 
     /**
@@ -164,8 +165,16 @@ class PostController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $post = Post::find($id);
+        if(Auth::id() == $post->user_id){
+            $post->delete();
+            return $post;
+        }else {
+            return response()->json(['message' => 'Unauthorized Access']);
+        }
+        
     }
+
 
 
     /**
@@ -527,13 +536,22 @@ class PostController extends Controller
         if(empty($post)){
             return response()->json(['message' => 'Post ID not found'], 404);
         }
-        $report = new ReportList();
-        $report->post_id = $post->id;
-        $report->user_id = Auth::id();
-        $report->report_id = $report_id;
-        $report->save();
+        $reportlist = ReportList::where('user_id', Auth::id())
+                     ->where('post_id', $post->id)
+                     ->count();
 
-        return response()->json($report);
+        if($reportlist == 0){
+
+            $report = new ReportList();
+            $report->post_id = $post->id;
+            $report->user_id = Auth::id();
+            $report->report_id = $report_id;
+            $report->save();
+            return response()->json($report);
+
+        }else{
+            return "Cannot report more than once in the same post.";
+        }
     }
 
 }
