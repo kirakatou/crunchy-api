@@ -129,7 +129,31 @@ class PostController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $this->validate($request, [
+            'taste' => 'numeric|required',
+            'price' => 'numeric|required',
+            'service' => 'numeric|required',
+        ]);
+
+        $post = Post::findOrFail($id);
+        if(Auth::user()->id == $post->user_id){
+            if($request->hasFile('image')){
+                if($request->image->isValid()){
+                    $path = $request->image->store('public/post/' . Auth::user()->id);
+                    $post->path = $path;
+                }
+            }
+            $post->user()->associate(Auth::user()->id);
+            $post->merchant()->associate($request->merchant_id);
+            $post->description = $request->description;
+            $post->taste = $request->taste;
+            $post->price = $request->price;
+            $post->service = $request->service;
+            $post->save();
+            return $post;
+        }else {
+            return response()->json(['message' => 'Unauthorized Access'], 401);
+        }
     }
 
     /**
