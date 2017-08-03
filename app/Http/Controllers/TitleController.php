@@ -128,6 +128,51 @@ class TitleController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
+
+    /**
+     * @SWG\Get(
+     *      path="/api/v1/food/title/{id}",
+     *      summary="Find Title by ID.",
+     *      produces={"application/json"},
+     *      tags={"Title"},
+     *      @SWG\Response(
+     *          response=200,
+     *          description="This is the data that you search.",
+     *          @SWG\Schema(
+     *              type="array",
+     *              @SWG\Items(ref="#/definitions/title")
+     *          )
+     *      ),
+     *      @SWG\Response(
+     *          response=400,
+     *          description="Invalid ID."
+     *      ),
+     *      @SWG\Response(
+     *          response=401,
+     *          description="Unauthorized action."
+     *      ),
+     *      @SWG\Response(
+     *          response=404,
+     *          description="Title not found."
+     *      ),
+     *      @SWG\Parameter(
+     *          name="Authorization",
+     *          description="Example = Bearer(space)'your_token'",
+     *          in="header",
+     *          required=true,
+     *          type="string",
+     *          default="Bearer",
+     *      ),
+     *      @SWG\Parameter(
+     *           name="id",
+     *           in="path",
+     *           description="Please enter the titleId",
+     *           required=true, 
+     *           type="integer"
+     *      )              
+     * )
+     */
+
     public function show($id)
     {
         $title = Title::findOrFail($id);
