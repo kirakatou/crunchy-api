@@ -13,7 +13,9 @@ class AddAmountToCoupons extends Migration
      */
     public function up()
     {
-        //
+        Schema::table('coupons', function($table) {
+            $table->integer('amount');
+        });
     }
 
     /**
@@ -23,6 +25,8 @@ class AddAmountToCoupons extends Migration
      */
     public function down()
     {
-        //
+        Schema::table('coupons', function($table) {
+            $table->dropColumn('amount');
+        });
     }
 }
