@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 /**
  * @SWG\Definition(
- *	definition="ReportCategory",
+ *	definition="reportcategory",
  *	@SWG\Property(
  *   	property="id",
  *      type="integer",
