@@ -195,7 +195,7 @@ class PostController extends Controller
      */
     public function addComment(Request $request, $id)
     {
-        $post = Post::find($id);
+        $post = Post::findOrFail($id);
         if(empty($post)){
             return response()->json(['message' => 'Post ID not found'], 404);
         }
@@ -253,7 +253,7 @@ class PostController extends Controller
      */
     public function showComments($id)
     {
-        $post = Post::find($id);
+        $post = Post::findOrFail($id);
         if(empty($post)){
             return response()->json(['message' => 'Post ID not found'], 404);
         }
@@ -306,12 +306,12 @@ class PostController extends Controller
      */
     public function deleteComment($id, $comment_id)
     {   
-        $post = Post::find($id);
+        $post = Post::findOrFail($id);
         if(empty($post)){
             return response()->json(['message' => 'Post ID not found'], 404);
         }
 
-        $comment = Comment::find($comment_id);
+        $comment = Comment::findOrFail($comment_id);
         if(empty($comment)){
             return response()->json(['message' => 'Comment ID not found'], 404);
         }
@@ -387,7 +387,7 @@ class PostController extends Controller
      */
     public function showTotalLikes($id)
     {
-        $post = Post::find($id);
+        $post = Post::findOrFail($id);
         if(empty($post)){
             return response()->json(['message' => 'Post ID not found'], 404);
         }
@@ -437,7 +437,7 @@ class PostController extends Controller
      */
     public function like($id)
     {
-        $post = Post::find($id);
+        $post = Post::findOrFail($id);
         if(empty($post)){
             return response()->json(['message' => 'Post ID not found'], 404);
         }
@@ -488,7 +488,7 @@ class PostController extends Controller
 
     public function report($id)
     {
-        $post = Post::find($id);
+        $post = Post::findOrFail($id);
         if(empty($post)){
             return response()->json(['message' => 'Post ID not found'], 404);
         }
@@ -499,7 +499,7 @@ class PostController extends Controller
 
     public function postReport(Request $request, $id, $report_id)
     {
-        $post = Post::find($id);
+        $post = Post::findOrFail($id);
         if(empty($post)){
             return response()->json(['message' => 'Post ID not found'], 404);
         }
