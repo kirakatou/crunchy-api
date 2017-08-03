@@ -35,14 +35,19 @@ Route::group(['prefix' => 'v1'], function(){
 		Route::delete('post/{id}/deleteComment/{comment_id}', 'PostController@deleteComment');
 		Route::get('post/{id}/totalLikes', 'PostController@showTotalLikes');
 		Route::post('post/{id}/like', 'PostController@like');
-		Route::post('follow/{user_id}', 'UserFollowerController@userDoFollow');
-		Route::get('following', 'UserFollowerController@showFollowing');
-		Route::get('followers', 'UserFollowerController@showFollowers');
-		Route::get('followers/{user_id}', 'UserFollowerController@userFollowers');
-		Route::get('following/{user_id}', 'UserFollowerController@userFollowing');
+		// Route::post('follow/{user_id}', 'UserFollowerController@userDoFollow');
+		// Route::get('following', 'UserFollowerController@showFollowing');
+		// Route::get('followers', 'UserFollowerController@showFollowers');
+		// Route::get('followers/{user_id}', 'UserFollowerController@userFollowers');
+		// Route::get('following/{user_id}', 'UserFollowerController@userFollowing');
 
 		Route::get('post/{id}/report', 'PostController@report');
 		Route::post('post/{id}/report/{report_id}', 'PostController@postReport');
+
+		Route::get('/{id}', 'ProfileController@index');
+		Route::get('{id}/followers', 'ProfileController@followers');
+		Route::get('{id}/following', 'ProfileController@following');
+		Route::post('{id}/follow', 'ProfileController@userDoFollow');
 
 		Route::group(['middleware' => 'admin', 'prefix' => 'food'], function(){
 

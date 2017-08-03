@@ -48,27 +48,27 @@ class UserFollowerController extends Controller
 
     }
 
-    public function showFollowers(){
-    	$followers = UserFollower::where('user_id', Auth::id())->get();
+    // public function showFollowers(){
+    // 	$followers = UserFollower::where('user_id', Auth::id())->get();
 
-    	return response()->json($followers->toArray());	
-    }
+    // 	return response()->json($followers->toArray());	
+    // }
 
-    public function showFollowing(){
-    	$following = UserFollower::where('follower_id', Auth::id())->get();
+    // public function showFollowing(){
+    // 	$following = UserFollower::where('follower_id', Auth::id())->get();
     	
-    	return response()->json($following->toArray());	
-    }
+    // 	return response()->json($following->toArray());	
+    // }
 
-    public function userFollowers($user_id){
-    	$followers = UserFollower::where('user_id', $user_id)->get();
+    // public function userFollowers($user_id){
+    // 	$followers = UserFollower::where('user_id', $user_id)->get();
     	
-    	return response()->json($followers->toArray());	
-    }
+    // 	return response()->json($followers->toArray());	
+    // }
 
-    public function userFollowing($user_id){
-    	$following = UserFollower::where('follower_id', $user_id)->get();
+    // public function userFollowing($user_id){
+    // 	$following = UserFollower::where('follower_id', $user_id)->get();
     	
-    	return response()->json($following->toArray());		
-    }
+    // 	return response()->json($following->toArray());		
+    // }
 }
