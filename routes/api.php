@@ -46,6 +46,12 @@ Route::group(['prefix' => 'v1'], function(){
 		Route::delete('post/{id}/deleteComment/{comment_id}', 'PostController@deleteComment');
 		Route::get('post/{id}/totalLikes', 'PostController@showTotalLikes');
 		Route::post('post/{id}/like', 'PostController@like');
+		Route::post('follow/{user_id}', 'UserFollowerController@userDoFollow');
+		Route::get('following', 'UserFollowerController@showFollowing');
+		Route::get('followers', 'UserFollowerController@showFollowers');
+		Route::get('followers/{user_id}', 'UserFollowerController@userFollowers');
+		Route::get('following/{user_id}', 'UserFollowerController@userFollowing');
+
 	});
 
 });
