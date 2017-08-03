@@ -36,7 +36,7 @@ Route::group(['prefix' => 'v1'], function(){
 		Route::get('post/{id}/totalLikes', 'PostController@showTotalLikes');
 		Route::post('post/{id}/like', 'PostController@like');
 
-		Route::group(['middleware' => 'jwt.auth'], function(){
+		Route::group(['middleware' => 'admin', 'prefix' => 'food'], function(){
 
 			Route::resource('title', 'TitleController', ['except' => [
 				'create', 'edit'
