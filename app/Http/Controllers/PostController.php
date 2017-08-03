@@ -416,13 +416,22 @@ class PostController extends Controller
         if(empty($post)){
             return response()->json(['message' => 'Post ID not found'], 404);
         }
-        $report = new ReportList();
-        $report->post_id = $post->id;
-        $report->user_id = Auth::id();
-        $report->report_id = $report_id;
-        $report->save();
+        $reportlist = ReportList::where('user_id', Auth::id())
+                     ->where('post_id', $post->id)
+                     ->count();
 
-        return response()->json($report);
+        if($reportlist == 0){
+
+            $report = new ReportList();
+            $report->post_id = $post->id;
+            $report->user_id = Auth::id();
+            $report->report_id = $report_id;
+            $report->save();
+            return response()->json($report);
+
+        }else{
+            return "Cannot report more than once in the same post.";
+        }
     }
 
 }
