@@ -14,7 +14,7 @@ class Profile extends Model
         return $this->hasOne('App\User');
     }
 
-    public function follow() {
-        return $this->hasMany('App\Follow');
+    public function follow(){
+        return $this->hasMany('App\UserFollower');
     }
 }
