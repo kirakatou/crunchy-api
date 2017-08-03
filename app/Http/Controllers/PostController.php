@@ -532,6 +532,43 @@ class PostController extends Controller
     }
 
 
+    /**
+     * @SWG\Get(
+     *      path="/api/v1/post/{postId}/report",
+     *      summary="show the list of the report category for report.",
+     *      produces={"application/json"},
+     *      consumes={"application/json"},
+     *      tags={"Report"},
+     *      @SWG\Response(
+     *          response=200,
+     *          description="Success.",
+     *          @SWG\Schema(
+     *              type="array",
+     *              @SWG\Items(ref="#/definitions/reportlist")
+     *          )
+     *      ),
+     *      @SWG\Response(
+     *          response=401,
+     *          description="Unauthorized action."
+     *      ),
+     *      @SWG\Parameter(
+     *          name="Authorization",
+     *          description="Example = Bearer(space)'your_token'",
+     *          in="header",
+     *          required=true,
+     *          type="string",
+     *          default="Bearer",
+     *      ),
+     *      @SWG\Parameter(
+     *           name="postId",
+     *           in="path",
+     *           description="Please enter the postId",
+     *           required=true, 
+     *           type="integer"
+     *      )             
+     * )
+     */
+
     public function report($id)
     {
         $post = Post::findOrFail($id);
@@ -542,6 +579,51 @@ class PostController extends Controller
         
         return response()->json($reports->toArray());
     }
+
+
+    /**
+     * @SWG\Post(
+     *      path="/api/v1/post/{postId}/report/{reportId}",
+     *      summary="Report a posting image.",
+     *      produces={"application/json"},
+     *      consumes={"application/json"},
+     *      tags={"Report"},
+     *      @SWG\Response(
+     *          response=200,
+     *          description="Success.",
+     *          @SWG\Schema(
+     *              type="array",
+     *              @SWG\Items(ref="#/definitions/reportlist")
+     *          )
+     *      ),
+     *      @SWG\Response(
+     *          response=401,
+     *          description="Unauthorized action."
+     *      ),
+     *      @SWG\Parameter(
+     *          name="Authorization",
+     *          description="Example = Bearer(space)'your_token'",
+     *          in="header",
+     *          required=true,
+     *          type="string",
+     *          default="Bearer",
+     *      ),
+     *      @SWG\Parameter(
+     *           name="postId",
+     *           in="path",
+     *           description="Please enter the postId",
+     *           required=true, 
+     *           type="integer"
+     *      ),
+     *      @SWG\Parameter(
+     *           name="reportId",
+     *           in="path",
+     *           description="Please enter the reportId",
+     *           required=true, 
+     *           type="integer"
+     *      )             
+     * )
+     */
 
     public function postReport(Request $request, $id, $report_id)
     {
