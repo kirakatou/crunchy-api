@@ -59,7 +59,7 @@ class Profile extends Model
         'user_id', 'name', 'email', 'gender', 'photo',
     ];
 
-    protected $appends = ['max_exp', 'title'];
+    protected $appends = ['max_exp', 'title' , 'point'];
 
     public function user() {
         return $this->hasOne('App\User');
@@ -78,6 +78,11 @@ class Profile extends Model
     {
     	$title = Title::where('level', '<=', $this->level)->get();
         return $title->last()->name;
+    }
+
+    public function getPointAttribute()
+    {
+        return $this->user->point->sum('point');
     }
 
 }
