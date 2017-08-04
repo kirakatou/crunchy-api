@@ -152,10 +152,6 @@ class CategoryController extends Controller
      *          )
      *      ),
      *      @SWG\Response(
-     *          response=400,
-     *          description="Invalid ID."
-     *      ),
-     *      @SWG\Response(
      *          response=401,
      *          description="Unauthorized action."
      *      ),
@@ -217,15 +213,11 @@ class CategoryController extends Controller
      *      tags={"Category"},
      *      @SWG\Response(
      *          response=200,
-     *          description="new Category has successfully updated.",
+     *          description="Category has been successfully updated.",
      *          @SWG\Schema(
      *              type="array",
      *              @SWG\Items(ref="#/definitions/category")
      *          )
-     *      ),
-     *      @SWG\Response(
-     *          response=400,
-     *          description="Invalid ID."
      *      ),
      *      @SWG\Response(
      *          response=401,
@@ -254,7 +246,7 @@ class CategoryController extends Controller
      *           name="body",
      *           in="body",
      *           required=true,
-     *           description="Category object that needs to be added to the database", 
+     *           description="Category object that needs to be updated", 
      *           type="string",
      *           @SWG\Schema(
      *               @SWG\Property(

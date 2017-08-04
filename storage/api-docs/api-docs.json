@@ -247,9 +247,6 @@
                             }
                         }
                     },
-                    "400": {
-                        "description": "Invalid ID."
-                    },
                     "401": {
                         "description": "Unauthorized action."
                     },
@@ -288,7 +285,7 @@
                     {
                         "name": "body",
                         "in": "body",
-                        "description": "Category object that needs to be added to the database",
+                        "description": "Category object that needs to be updated",
                         "required": true,
                         "schema": {
                             "properties": {
@@ -308,16 +305,13 @@
                 ],
                 "responses": {
                     "200": {
-                        "description": "new Category has successfully updated.",
+                        "description": "Category has been successfully updated.",
                         "schema": {
                             "type": "array",
                             "items": {
                                 "$ref": "#/definitions/category"
                             }
                         }
-                    },
-                    "400": {
-                        "description": "Invalid ID."
                     },
                     "401": {
                         "description": "Unauthorized action."
@@ -366,6 +360,7 @@
             }
         },
         "/api/v1/food/coupon": {
+<<<<<<< HEAD
             "get": {
                 "tags": [
                     "Coupon"
@@ -1089,6 +1084,1402 @@
                     "ReportCategory"
                 ],
                 "summary": "Find Report Category by ID.",
+=======
+            "get": {
+                "tags": [
+                    "Coupon"
+                ],
+                "summary": "Retrieves the collection of Coupon resources.",
+>>>>>>> 67833167ef5c361c2e9338d3649dcb37c2b9cf1e
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "Authorization",
+                        "in": "header",
+                        "description": "Example = Bearer(space)'your_token'",
+                        "required": true,
+                        "type": "string",
+                        "default": "Bearer"
+                    },
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "Please enter the reportcategoryId",
+                        "required": true,
+                        "type": "integer"
+                    }
+                ],
+                "responses": {
+                    "200": {
+<<<<<<< HEAD
+                        "description": "This is the data that you search.",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/reportcategory"
+=======
+                        "description": "Coupons collection.",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/coupon"
+>>>>>>> 67833167ef5c361c2e9338d3649dcb37c2b9cf1e
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Invalid ID."
+                    },
+                    "401": {
+                        "description": "Unauthorized action."
+                    },
+                    "404": {
+                        "description": "Report Category not found."
+                    }
+                }
+            },
+<<<<<<< HEAD
+            "put": {
+                "tags": [
+                    "ReportCategory"
+                ],
+                "summary": "Update the Report Category resource.",
+=======
+            "post": {
+                "tags": [
+                    "Coupon"
+                ],
+                "summary": "Add new Coupon.",
+>>>>>>> 67833167ef5c361c2e9338d3649dcb37c2b9cf1e
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "Authorization",
+                        "in": "header",
+                        "description": "Example = Bearer(space)'your_token'",
+                        "required": true,
+                        "type": "string",
+                        "default": "Bearer"
+                    },
+                    {
+<<<<<<< HEAD
+                        "name": "id",
+                        "in": "path",
+                        "description": "Please enter the categoryreportId",
+                        "required": true,
+                        "type": "integer"
+                    },
+                    {
+                        "name": "body",
+                        "in": "body",
+                        "description": "Report Category object that needs to be added to the database",
+                        "required": true,
+                        "schema": {
+                            "properties": {
+                                "name": {
+=======
+                        "name": "body",
+                        "in": "body",
+                        "description": "Coupon object that needs to be added to the database",
+                        "required": true,
+                        "schema": {
+                            "properties": {
+                                "coupon_title": {
+                                    "type": "string"
+                                },
+                                "point": {
+                                    "type": "integer",
+                                    "format": "int32"
+                                },
+                                "description": {
+>>>>>>> 67833167ef5c361c2e9338d3649dcb37c2b9cf1e
+                                    "type": "string"
+                                },
+                                "amount": {
+                                    "type": "integer",
+                                    "format": "int32"
+                                }
+                            }
+                        },
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+<<<<<<< HEAD
+                        "description": "new Report Category has successfully updated.",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/reportcategory"
+=======
+                        "description": "new Coupon has successfully added.",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/coupon"
+>>>>>>> 67833167ef5c361c2e9338d3649dcb37c2b9cf1e
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Invalid ID."
+                    },
+                    "401": {
+                        "description": "Unauthorized action."
+                    },
+                    "404": {
+                        "description": "Report Category not found."
+                    }
+                }
+<<<<<<< HEAD
+            },
+            "delete": {
+                "tags": [
+                    "ReportCategory"
+                ],
+                "summary": "Remove the Report Category resource.",
+=======
+            }
+        },
+        "/api/v1/food/coupon/{id}": {
+            "get": {
+                "tags": [
+                    "Coupon"
+                ],
+                "summary": "Find Coupon by ID.",
+>>>>>>> 67833167ef5c361c2e9338d3649dcb37c2b9cf1e
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "Authorization",
+                        "in": "header",
+                        "description": "Example = Bearer(space)'your_token'",
+                        "required": true,
+                        "type": "string",
+                        "default": "Bearer"
+                    },
+                    {
+                        "name": "id",
+                        "in": "path",
+<<<<<<< HEAD
+                        "description": "Please enter the reportcategoryId",
+=======
+                        "description": "Please enter the couponId",
+>>>>>>> 67833167ef5c361c2e9338d3649dcb37c2b9cf1e
+                        "required": true,
+                        "type": "integer"
+                    }
+                ],
+                "responses": {
+<<<<<<< HEAD
+                    "204": {
+                        "description": "Report Category resource deleted."
+=======
+                    "200": {
+                        "description": "This is the data that you search.",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/coupon"
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Invalid ID."
+>>>>>>> 67833167ef5c361c2e9338d3649dcb37c2b9cf1e
+                    },
+                    "401": {
+                        "description": "Unauthorized action."
+                    },
+                    "404": {
+<<<<<<< HEAD
+                        "description": "Report Category not found."
+                    }
+                }
+            }
+        },
+        "/api/v1/food/title": {
+            "get": {
+                "tags": [
+                    "Title"
+                ],
+                "summary": "Retrieves the collection of Title resources.",
+=======
+                        "description": "Coupon not found."
+                    }
+                }
+            },
+            "put": {
+                "tags": [
+                    "Coupon"
+                ],
+                "summary": "Update the Coupon resource.",
+                "consumes": [
+                    "application/json"
+                ],
+>>>>>>> 67833167ef5c361c2e9338d3649dcb37c2b9cf1e
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "Authorization",
+                        "in": "header",
+                        "description": "Example = Bearer(space)'your_token'",
+                        "required": true,
+                        "type": "string",
+                        "default": "Bearer"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Titles collection.",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/title"
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized action."
+                    }
+                }
+            },
+            "post": {
+                "tags": [
+                    "Title"
+                ],
+                "summary": "Add new Title.",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+<<<<<<< HEAD
+                        "name": "Authorization",
+                        "in": "header",
+                        "description": "Example = Bearer(space)'your_token'",
+=======
+                        "name": "id",
+                        "in": "path",
+                        "description": "Please enter the couponId",
+>>>>>>> 67833167ef5c361c2e9338d3649dcb37c2b9cf1e
+                        "required": true,
+                        "type": "string",
+                        "default": "Bearer"
+                    },
+                    {
+                        "name": "body",
+                        "in": "body",
+<<<<<<< HEAD
+                        "description": "Title object that needs to be added to the database",
+=======
+                        "description": "Coupon object that needs to be added to the database",
+                        "required": true,
+                        "schema": {
+                            "properties": {
+                                "coupon_title": {
+                                    "type": "string"
+                                },
+                                "point": {
+                                    "type": "integer",
+                                    "format": "int32"
+                                },
+                                "description": {
+                                    "type": "string"
+                                },
+                                "amount": {
+                                    "type": "integer",
+                                    "format": "int32"
+                                }
+                            }
+                        },
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "new Coupon has successfully updated.",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/coupon"
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Invalid ID."
+                    },
+                    "401": {
+                        "description": "Unauthorized action."
+                    },
+                    "404": {
+                        "description": "Coupon not found."
+                    }
+                }
+            },
+            "delete": {
+                "tags": [
+                    "Coupon"
+                ],
+                "summary": "Remove the Coupon resource.",
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "Authorization",
+                        "in": "header",
+                        "description": "Example = Bearer(space)'your_token'",
+                        "required": true,
+                        "type": "string",
+                        "default": "Bearer"
+                    },
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "Please enter the couponId",
+>>>>>>> 67833167ef5c361c2e9338d3649dcb37c2b9cf1e
+                        "required": true,
+                        "schema": {
+                            "properties": {
+                                "level": {
+                                    "type": "string"
+                                },
+                                "name": {
+                                    "type": "string"
+                                }
+                            }
+                        },
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+<<<<<<< HEAD
+                    "200": {
+                        "description": "new Title has successfully added.",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/title"
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized action."
+=======
+                    "204": {
+                        "description": "Coupon resource deleted."
+                    },
+                    "401": {
+                        "description": "Unauthorized action."
+                    },
+                    "404": {
+                        "description": "Title not found."
+>>>>>>> 67833167ef5c361c2e9338d3649dcb37c2b9cf1e
+                    }
+                }
+            }
+        },
+<<<<<<< HEAD
+        "/api/v1/food/title/{id}": {
+            "get": {
+                "tags": [
+                    "Title"
+                ],
+                "summary": "Find Title by ID.",
+=======
+        "/api/v1/merchant": {
+            "get": {
+                "tags": [
+                    "Merchant"
+                ],
+                "summary": "Retrieves the collection of Merchant resources.",
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "Authorization",
+                        "in": "header",
+                        "description": "Example = Bearer(space)'your_token'",
+                        "required": true,
+                        "type": "string",
+                        "default": "Bearer"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Merchants collection.",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/merchant"
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized action."
+                    }
+                }
+            },
+            "post": {
+                "tags": [
+                    "Merchant"
+                ],
+                "summary": "Add new Merchant.",
+                "consumes": [
+                    "application/json"
+                ],
+>>>>>>> 67833167ef5c361c2e9338d3649dcb37c2b9cf1e
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "Authorization",
+                        "in": "header",
+                        "description": "Example = Bearer(space)'your_token'",
+                        "required": true,
+                        "type": "string",
+                        "default": "Bearer"
+                    },
+                    {
+<<<<<<< HEAD
+                        "name": "id",
+                        "in": "path",
+                        "description": "Please enter the titleId",
+=======
+                        "name": "body",
+                        "in": "body",
+                        "description": "Category object that needs to be added to the database",
+                        "required": true,
+                        "schema": {
+                            "properties": {
+                                "name": {
+                                    "type": "string"
+                                },
+                                "address": {
+                                    "type": "string"
+                                },
+                                "phone_no": {
+                                    "type": "string"
+                                }
+                            }
+                        },
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "new Merchant has successfully added.",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/merchant"
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized action."
+                    }
+                }
+            }
+        },
+        "/api/v1/merchant/{merchantId}": {
+            "get": {
+                "tags": [
+                    "Merchant"
+                ],
+                "summary": "Find Merchant by ID.",
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "Authorization",
+                        "in": "header",
+                        "description": "Example = Bearer(space)'your_token'",
+                        "required": true,
+                        "type": "string",
+                        "default": "Bearer"
+                    },
+                    {
+                        "name": "merchantId",
+                        "in": "path",
+                        "description": "Please enter the merchantId",
+>>>>>>> 67833167ef5c361c2e9338d3649dcb37c2b9cf1e
+                        "required": true,
+                        "type": "integer"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "This is the data that you search.",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+<<<<<<< HEAD
+                                "$ref": "#/definitions/title"
+=======
+                                "$ref": "#/definitions/merchant"
+>>>>>>> 67833167ef5c361c2e9338d3649dcb37c2b9cf1e
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized action."
+                    },
+                    "404": {
+                        "description": "Merchant not found."
+                    }
+                }
+            },
+            "delete": {
+                "tags": [
+                    "Merchant"
+                ],
+                "summary": "Remove the Merchant resource.",
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "Authorization",
+                        "in": "header",
+                        "description": "Example = Bearer(space)'your_token'",
+                        "required": true,
+                        "type": "string",
+                        "default": "Bearer"
+                    },
+                    {
+                        "name": "merchantId",
+                        "in": "path",
+                        "description": "Please enter the merchantId",
+                        "required": true,
+                        "type": "integer"
+                    }
+                ],
+                "responses": {
+                    "204": {
+                        "description": "Merchant resource deleted."
+                    },
+                    "401": {
+                        "description": "Unauthorized action."
+                    },
+                    "404": {
+<<<<<<< HEAD
+                        "description": "Title not found."
+                    }
+                }
+            },
+            "put": {
+                "tags": [
+                    "Title"
+                ],
+                "summary": "Update the Title resource.",
+=======
+                        "description": "Merchant not found."
+                    }
+                }
+            }
+        },
+        "/api/v1/merchant{merchantId}": {
+            "put": {
+                "tags": [
+                    "Merchant"
+                ],
+                "summary": "Update the Merchant resource.",
+>>>>>>> 67833167ef5c361c2e9338d3649dcb37c2b9cf1e
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "Authorization",
+                        "in": "header",
+                        "description": "Example = Bearer(space)'your_token'",
+                        "required": true,
+                        "type": "string",
+                        "default": "Bearer"
+                    },
+                    {
+<<<<<<< HEAD
+                        "name": "id",
+                        "in": "path",
+                        "description": "Please enter the titleId",
+=======
+                        "name": "merchantId",
+                        "in": "path",
+                        "description": "Please enter the merchantId",
+>>>>>>> 67833167ef5c361c2e9338d3649dcb37c2b9cf1e
+                        "required": true,
+                        "type": "integer"
+                    },
+                    {
+                        "name": "body",
+                        "in": "body",
+<<<<<<< HEAD
+                        "description": "Title object that needs to be added to the database",
+                        "required": true,
+                        "schema": {
+                            "properties": {
+                                "level": {
+                                    "type": "string"
+                                },
+                                "name": {
+=======
+                        "description": "Merchant object that needs to be updated",
+                        "required": true,
+                        "schema": {
+                            "properties": {
+                                "name": {
+                                    "type": "string"
+                                },
+                                "address": {
+                                    "type": "string"
+                                },
+                                "phone_no": {
+>>>>>>> 67833167ef5c361c2e9338d3649dcb37c2b9cf1e
+                                    "type": "string"
+                                }
+                            }
+                        },
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+<<<<<<< HEAD
+                        "description": "new Title has successfully updated.",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/title"
+=======
+                        "description": "Merchant has been successfully updated.",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/merchant"
+>>>>>>> 67833167ef5c361c2e9338d3649dcb37c2b9cf1e
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Invalid ID."
+                    },
+                    "401": {
+                        "description": "Unauthorized action."
+                    },
+                    "404": {
+                        "description": "Title not found."
+                    }
+                }
+            },
+            "delete": {
+                "tags": [
+                    "Title"
+                ],
+                "summary": "Remove the Title resource.",
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "Authorization",
+                        "in": "header",
+                        "description": "Example = Bearer(space)'your_token'",
+                        "required": true,
+                        "type": "string",
+                        "default": "Bearer"
+                    },
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "Please enter the titleId",
+                        "required": true,
+                        "type": "integer"
+                    }
+                ],
+                "responses": {
+                    "204": {
+                        "description": "Title resource deleted."
+                    },
+                    "401": {
+                        "description": "Unauthorized action."
+                    },
+                    "404": {
+<<<<<<< HEAD
+=======
+                        "description": "Merchant not found."
+                    }
+                }
+            }
+        },
+        "/api/v1/post": {
+            "get": {
+                "tags": [
+                    "Post"
+                ],
+                "summary": "Retrieves the collection of Post resources.",
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "Authorization",
+                        "in": "header",
+                        "description": "Example = Bearer(space)'your_token'",
+                        "required": true,
+                        "type": "string",
+                        "default": "Bearer"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Posts collection.",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/post"
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized action."
+                    }
+                }
+            }
+        },
+        "/api/v1/post/{postId}/addComment": {
+            "post": {
+                "tags": [
+                    "Comment"
+                ],
+                "summary": "Add comment in posting image.",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "Authorization",
+                        "in": "header",
+                        "description": "Example = Bearer(space)'your_token'",
+                        "required": true,
+                        "type": "string",
+                        "default": "Bearer"
+                    },
+                    {
+                        "name": "postId",
+                        "in": "path",
+                        "description": "Please enter the postId",
+                        "required": true,
+                        "type": "integer"
+                    },
+                    {
+                        "name": "body",
+                        "in": "body",
+                        "description": "Comment that needs to be added into posting image",
+                        "required": true,
+                        "schema": {
+                            "properties": {
+                                "comment": {
+                                    "type": "string"
+                                }
+                            }
+                        },
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Comment has successfully added.",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/comment"
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized action."
+                    }
+                }
+            }
+        },
+        "/api/v1/post/{postId}/comments": {
+            "get": {
+                "tags": [
+                    "Comment"
+                ],
+                "summary": "Show all comments by Post's Id.",
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "Authorization",
+                        "in": "header",
+                        "description": "Example = Bearer(space)'your_token'",
+                        "required": true,
+                        "type": "string",
+                        "default": "Bearer"
+                    },
+                    {
+                        "name": "postId",
+                        "in": "path",
+                        "description": "Please enter the postId",
+                        "required": true,
+                        "type": "integer"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "This is the data that you search.",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/comment"
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized action."
+                    },
+                    "404": {
+                        "description": "Post ID not found."
+                    }
+                }
+            }
+        },
+        "/api/v1/post/{postId}/deleteComment/{commentId}": {
+            "delete": {
+                "tags": [
+                    "Comment"
+                ],
+                "summary": "Remove the comment from posting image.",
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "Authorization",
+                        "in": "header",
+                        "description": "Example = Bearer(space)'your_token'",
+                        "required": true,
+                        "type": "string",
+                        "default": "Bearer"
+                    },
+                    {
+                        "name": "postId",
+                        "in": "path",
+                        "description": "Please enter the postId",
+                        "required": true,
+                        "type": "integer"
+                    },
+                    {
+                        "name": "commentId",
+                        "in": "path",
+                        "description": "Please enter the commentId",
+                        "required": true,
+                        "type": "integer"
+                    }
+                ],
+                "responses": {
+                    "204": {
+                        "description": "Comment has been deleted."
+                    },
+                    "401": {
+                        "description": "Unauthorized action."
+                    },
+                    "404": {
+                        "description": "Post ID or Comment ID not found."
+                    }
+                }
+            }
+        },
+        "/api/v1/post/{postId}/totalLikes": {
+            "get": {
+                "tags": [
+                    "Like"
+                ],
+                "summary": "Show total likes by Post's Id.",
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "Authorization",
+                        "in": "header",
+                        "description": "Example = Bearer(space)'your_token'",
+                        "required": true,
+                        "type": "string",
+                        "default": "Bearer"
+                    },
+                    {
+                        "name": "postId",
+                        "in": "path",
+                        "description": "Please enter the postId",
+                        "required": true,
+                        "type": "integer"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "This is the data that you search.",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/like"
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized action."
+                    },
+                    "404": {
+                        "description": "Post ID not found."
+                    }
+                }
+            }
+        },
+        "/api/v1/post/{postId}/like": {
+            "post": {
+                "tags": [
+                    "Like"
+                ],
+                "summary": "Like or Dislike a posting image.",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "Authorization",
+                        "in": "header",
+                        "description": "Example = Bearer(space)'your_token'",
+                        "required": true,
+                        "type": "string",
+                        "default": "Bearer"
+                    },
+                    {
+                        "name": "postId",
+                        "in": "path",
+                        "description": "Please enter the postId",
+                        "required": true,
+                        "type": "integer"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Success.",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/like"
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized action."
+                    },
+                    "404": {
+                        "description": "Post ID not found."
+                    }
+                }
+            }
+        },
+        "/api/v1/post/{postId}/report": {
+            "get": {
+                "tags": [
+                    "Report"
+                ],
+                "summary": "show the list of the report category for report.",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "Authorization",
+                        "in": "header",
+                        "description": "Example = Bearer(space)'your_token'",
+                        "required": true,
+                        "type": "string",
+                        "default": "Bearer"
+                    },
+                    {
+                        "name": "postId",
+                        "in": "path",
+                        "description": "Please enter the postId",
+                        "required": true,
+                        "type": "integer"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Success.",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/reportlist"
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized action."
+                    }
+                }
+            }
+        },
+        "/api/v1/post/{postId}/report/{reportId}": {
+            "post": {
+                "tags": [
+                    "Report"
+                ],
+                "summary": "Report a posting image.",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "Authorization",
+                        "in": "header",
+                        "description": "Example = Bearer(space)'your_token'",
+                        "required": true,
+                        "type": "string",
+                        "default": "Bearer"
+                    },
+                    {
+                        "name": "postId",
+                        "in": "path",
+                        "description": "Please enter the postId",
+                        "required": true,
+                        "type": "integer"
+                    },
+                    {
+                        "name": "reportId",
+                        "in": "path",
+                        "description": "Please enter the reportId",
+                        "required": true,
+                        "type": "integer"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Success.",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/reportlist"
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized action."
+                    }
+                }
+            }
+        },
+        "/api/v1/{userId}": {
+            "get": {
+                "tags": [
+                    "Profile"
+                ],
+                "summary": "Retrieves the collection of Profile resources.",
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "Authorization",
+                        "in": "header",
+                        "description": "Example = Bearer(space)'your_token'",
+                        "required": true,
+                        "type": "string",
+                        "default": "Bearer"
+                    },
+                    {
+                        "name": "userId",
+                        "in": "path",
+                        "description": "Please enter the userId",
+                        "required": true,
+                        "type": "integer"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Profiles collection.",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/profile"
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized action."
+                    }
+                }
+            }
+        },
+        "/api/v1/{userId}/follow": {
+            "post": {
+                "tags": [
+                    "User Follower"
+                ],
+                "summary": "Follow or Unfollow user.",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "Authorization",
+                        "in": "header",
+                        "description": "Example = Bearer(space)'your_token'",
+                        "required": true,
+                        "type": "string",
+                        "default": "Bearer"
+                    },
+                    {
+                        "name": "userId",
+                        "in": "path",
+                        "description": "Please enter the userId",
+                        "required": true,
+                        "type": "integer"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Success.",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/user follower"
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized action."
+                    },
+                    "404": {
+                        "description": "User ID not found."
+                    }
+                }
+            }
+        },
+        "/api/v1/{userId}/followers": {
+            "get": {
+                "tags": [
+                    "User Follower"
+                ],
+                "summary": "Show total followers by User's Id.",
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "Authorization",
+                        "in": "header",
+                        "description": "Example = Bearer(space)'your_token'",
+                        "required": true,
+                        "type": "string",
+                        "default": "Bearer"
+                    },
+                    {
+                        "name": "userId",
+                        "in": "path",
+                        "description": "Please enter the userId",
+                        "required": true,
+                        "type": "integer"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "This is the data that you search.",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/user follower"
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized action."
+                    },
+                    "404": {
+                        "description": "User ID not found."
+                    }
+                }
+            }
+        },
+        "/api/v1/{userId}/following": {
+            "get": {
+                "tags": [
+                    "User Follower"
+                ],
+                "summary": "Show total following by User's Id.",
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "Authorization",
+                        "in": "header",
+                        "description": "Example = Bearer(space)'your_token'",
+                        "required": true,
+                        "type": "string",
+                        "default": "Bearer"
+                    },
+                    {
+                        "name": "userId",
+                        "in": "path",
+                        "description": "Please enter the userId",
+                        "required": true,
+                        "type": "integer"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "This is the data that you search.",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/user follower"
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized action."
+                    },
+                    "404": {
+                        "description": "User ID not found."
+                    }
+                }
+            }
+        },
+        "/api/v1/food/reportcategory": {
+            "get": {
+                "tags": [
+                    "ReportCategory"
+                ],
+                "summary": "Retrieves the collection of Report Category resources.",
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "Authorization",
+                        "in": "header",
+                        "description": "Example = Bearer(space)'your_token'",
+                        "required": true,
+                        "type": "string",
+                        "default": "Bearer"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Report Categories collection.",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/reportcategory"
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized action."
+                    }
+                }
+            },
+            "post": {
+                "tags": [
+                    "ReportCategory"
+                ],
+                "summary": "Add new Report Category.",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "Authorization",
+                        "in": "header",
+                        "description": "Example = Bearer(space)'your_token'",
+                        "required": true,
+                        "type": "string",
+                        "default": "Bearer"
+                    },
+                    {
+                        "name": "body",
+                        "in": "body",
+                        "description": "Report Category object that needs to be added to the database",
+                        "required": true,
+                        "schema": {
+                            "properties": {
+                                "name": {
+                                    "type": "string"
+                                }
+                            }
+                        },
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "new Report Category has successfully added.",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/reportcategory"
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized action."
+                    }
+                }
+            }
+        },
+        "/api/v1/food/reportcategory/{id}": {
+            "get": {
+                "tags": [
+                    "ReportCategory"
+                ],
+                "summary": "Find Report Category by ID.",
                 "produces": [
                     "application/json"
                 ],
@@ -1465,6 +2856,7 @@
                         "description": "Unauthorized action."
                     },
                     "404": {
+>>>>>>> 67833167ef5c361c2e9338d3649dcb37c2b9cf1e
                         "description": "Title not found."
                     }
                 }
@@ -1583,6 +2975,29 @@
                 }
             }
         },
+        "merchant": {
+            "properties": {
+                "id": {
+                    "type": "integer",
+                    "format": "int32"
+                },
+                "name": {
+                    "type": "string"
+                },
+                "address": {
+                    "type": "string"
+                },
+                "phone_no": {
+                    "type": "string"
+                },
+                "create_at": {
+                    "type": "string"
+                },
+                "update_at": {
+                    "type": "string"
+                }
+            }
+        },
         "post": {
             "properties": {
                 "id": {
@@ -1623,6 +3038,45 @@
                 }
             }
         },
+<<<<<<< HEAD
+=======
+        "profile": {
+            "properties": {
+                "id": {
+                    "type": "integer",
+                    "format": "int32"
+                },
+                "user_id": {
+                    "type": "integer",
+                    "format": "int32"
+                },
+                "name": {
+                    "type": "string"
+                },
+                "email": {
+                    "type": "string"
+                },
+                "gender": {
+                    "type": "boolean"
+                },
+                "photo": {
+                    "type": "string"
+                },
+                "max_exp": {
+                    "type": "string"
+                },
+                "title": {
+                    "type": "string"
+                },
+                "create_at": {
+                    "type": "string"
+                },
+                "update_at": {
+                    "type": "string"
+                }
+            }
+        },
+>>>>>>> 67833167ef5c361c2e9338d3649dcb37c2b9cf1e
         "reportcategory": {
             "properties": {
                 "id": {
@@ -1667,6 +3121,31 @@
                     "type": "string"
                 }
             }
+<<<<<<< HEAD
+=======
+        },
+        "user follower": {
+            "properties": {
+                "id": {
+                    "type": "integer",
+                    "format": "int32"
+                },
+                "user_id": {
+                    "type": "integer",
+                    "format": "int32"
+                },
+                "follower_id": {
+                    "type": "integer",
+                    "format": "int32"
+                },
+                "create_at": {
+                    "type": "string"
+                },
+                "update_at": {
+                    "type": "string"
+                }
+            }
+>>>>>>> 67833167ef5c361c2e9338d3649dcb37c2b9cf1e
         }
     }
 }

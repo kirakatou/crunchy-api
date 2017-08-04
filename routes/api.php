@@ -30,6 +30,10 @@ Route::group(['prefix' => 'v1'], function(){
 			'create', 'edit'
 		]]);
 
+		Route::resource('merchant', 'MerchantController', ['except' => [
+			'create', 'edit'
+		]]);
+
 		Route::post('post/{id}/addComment', 'PostController@addComment');
 		Route::get('post/{id}/comments', 'PostController@showComments');
 		Route::delete('post/{id}/deleteComment/{comment_id}', 'PostController@deleteComment');

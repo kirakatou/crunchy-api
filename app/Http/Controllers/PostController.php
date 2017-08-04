@@ -269,10 +269,6 @@ class PostController extends Controller
      *          )
      *      ),
      *      @SWG\Response(
-     *          response=400,
-     *          description="Invalid ID."
-     *      ),
-     *      @SWG\Response(
      *          response=401,
      *          description="Unauthorized action."
      *      ),
@@ -403,10 +399,6 @@ class PostController extends Controller
      *          )
      *      ),
      *      @SWG\Response(
-     *          response=400,
-     *          description="Invalid ID."
-     *      ),
-     *      @SWG\Response(
      *          response=401,
      *          description="Unauthorized action."
      *      ),
@@ -463,6 +455,10 @@ class PostController extends Controller
      *      @SWG\Response(
      *          response=401,
      *          description="Unauthorized action."
+     *      ),
+     *      @SWG\Response(
+     *          response=404,
+     *          description="Post ID not found."
      *      ),
      *      @SWG\Parameter(
      *          name="Authorization",
