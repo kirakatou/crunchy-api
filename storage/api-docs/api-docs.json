@@ -285,7 +285,7 @@
                     {
                         "name": "body",
                         "in": "body",
-                        "description": "Category object that needs to be added to the database",
+                        "description": "Category object that needs to be updated",
                         "required": true,
                         "schema": {
                             "properties": {
@@ -305,7 +305,7 @@
                 ],
                 "responses": {
                     "200": {
-                        "description": "new Category has successfully updated.",
+                        "description": "Category has been successfully updated.",
                         "schema": {
                             "type": "array",
                             "items": {
@@ -610,6 +610,247 @@
                     },
                     "404": {
                         "description": "Title not found."
+                    }
+                }
+            }
+        },
+        "/api/v1/merchant": {
+            "get": {
+                "tags": [
+                    "Merchant"
+                ],
+                "summary": "Retrieves the collection of Merchant resources.",
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "Authorization",
+                        "in": "header",
+                        "description": "Example = Bearer(space)'your_token'",
+                        "required": true,
+                        "type": "string",
+                        "default": "Bearer"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Merchants collection.",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/merchant"
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized action."
+                    }
+                }
+            },
+            "post": {
+                "tags": [
+                    "Merchant"
+                ],
+                "summary": "Add new Merchant.",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "Authorization",
+                        "in": "header",
+                        "description": "Example = Bearer(space)'your_token'",
+                        "required": true,
+                        "type": "string",
+                        "default": "Bearer"
+                    },
+                    {
+                        "name": "body",
+                        "in": "body",
+                        "description": "Category object that needs to be added to the database",
+                        "required": true,
+                        "schema": {
+                            "properties": {
+                                "name": {
+                                    "type": "string"
+                                },
+                                "address": {
+                                    "type": "string"
+                                },
+                                "phone_no": {
+                                    "type": "string"
+                                }
+                            }
+                        },
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "new Merchant has successfully added.",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/merchant"
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized action."
+                    }
+                }
+            }
+        },
+        "/api/v1/merchant/{merchantId}": {
+            "get": {
+                "tags": [
+                    "Merchant"
+                ],
+                "summary": "Find Merchant by ID.",
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "Authorization",
+                        "in": "header",
+                        "description": "Example = Bearer(space)'your_token'",
+                        "required": true,
+                        "type": "string",
+                        "default": "Bearer"
+                    },
+                    {
+                        "name": "merchantId",
+                        "in": "path",
+                        "description": "Please enter the merchantId",
+                        "required": true,
+                        "type": "integer"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "This is the data that you search.",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/merchant"
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized action."
+                    },
+                    "404": {
+                        "description": "Merchant not found."
+                    }
+                }
+            },
+            "delete": {
+                "tags": [
+                    "Merchant"
+                ],
+                "summary": "Remove the Merchant resource.",
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "Authorization",
+                        "in": "header",
+                        "description": "Example = Bearer(space)'your_token'",
+                        "required": true,
+                        "type": "string",
+                        "default": "Bearer"
+                    },
+                    {
+                        "name": "merchantId",
+                        "in": "path",
+                        "description": "Please enter the merchantId",
+                        "required": true,
+                        "type": "integer"
+                    }
+                ],
+                "responses": {
+                    "204": {
+                        "description": "Merchant resource deleted."
+                    },
+                    "401": {
+                        "description": "Unauthorized action."
+                    },
+                    "404": {
+                        "description": "Merchant not found."
+                    }
+                }
+            }
+        },
+        "/api/v1/merchant{merchantId}": {
+            "put": {
+                "tags": [
+                    "Merchant"
+                ],
+                "summary": "Update the Merchant resource.",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "Authorization",
+                        "in": "header",
+                        "description": "Example = Bearer(space)'your_token'",
+                        "required": true,
+                        "type": "string",
+                        "default": "Bearer"
+                    },
+                    {
+                        "name": "merchantId",
+                        "in": "path",
+                        "description": "Please enter the merchantId",
+                        "required": true,
+                        "type": "integer"
+                    },
+                    {
+                        "name": "body",
+                        "in": "body",
+                        "description": "Merchant object that needs to be updated",
+                        "required": true,
+                        "schema": {
+                            "properties": {
+                                "name": {
+                                    "type": "string"
+                                },
+                                "address": {
+                                    "type": "string"
+                                },
+                                "phone_no": {
+                                    "type": "string"
+                                }
+                            }
+                        },
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Merchant has been successfully updated.",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/merchant"
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized action."
+                    },
+                    "404": {
+                        "description": "Merchant not found."
                     }
                 }
             }
@@ -1114,9 +1355,6 @@
                                 "$ref": "#/definitions/user follower"
                             }
                         }
-                    },
-                    "400": {
-                        "description": "invalid id supplied."
                     },
                     "401": {
                         "description": "Unauthorized action."
@@ -1748,6 +1986,29 @@
                 },
                 "like": {
                     "type": "boolean"
+                },
+                "create_at": {
+                    "type": "string"
+                },
+                "update_at": {
+                    "type": "string"
+                }
+            }
+        },
+        "merchant": {
+            "properties": {
+                "id": {
+                    "type": "integer",
+                    "format": "int32"
+                },
+                "name": {
+                    "type": "string"
+                },
+                "address": {
+                    "type": "string"
+                },
+                "phone_no": {
+                    "type": "string"
                 },
                 "create_at": {
                     "type": "string"
