@@ -36,6 +36,10 @@ class User extends Authenticatable
         return $this->belongsTo('App\Admin');
     }
 
+    public function merchant() {
+        return $this->belongsTo('App\Merchant');
+    }
+
     public function post() {
         return $this->hasMany('App\Post');
     }
