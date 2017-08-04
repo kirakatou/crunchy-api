@@ -16,7 +16,8 @@ class RedeemController extends Controller
      */
     public function index()
     {
-        //
+        $coupons = Coupon::paginate();
+        return $coupons;
     }
 
     /**
