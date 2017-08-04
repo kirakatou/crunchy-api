@@ -34,6 +34,8 @@ Route::group(['prefix' => 'v1'], function(){
 			'create', 'edit'
 		]]);
 
+		Route::get('redeem', 'RedeemController@index');
+		Route::post('redeem/{id}', 'RedeemController@store');
 		Route::post('post/{id}/addComment', 'PostController@addComment');
 		Route::get('post/{id}/comments', 'PostController@showComments');
 		Route::delete('post/{id}/deleteComment/{comment_id}', 'PostController@deleteComment');
