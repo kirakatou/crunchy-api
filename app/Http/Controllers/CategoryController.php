@@ -213,7 +213,7 @@ class CategoryController extends Controller
      *      tags={"Category"},
      *      @SWG\Response(
      *          response=200,
-     *          description="new Category has successfully updated.",
+     *          description="Category has been successfully updated.",
      *          @SWG\Schema(
      *              type="array",
      *              @SWG\Items(ref="#/definitions/category")
@@ -246,7 +246,7 @@ class CategoryController extends Controller
      *           name="body",
      *           in="body",
      *           required=true,
-     *           description="Category object that needs to be added to the database", 
+     *           description="Category object that needs to be updated", 
      *           type="string",
      *           @SWG\Schema(
      *               @SWG\Property(
