@@ -36,9 +36,23 @@ class RedeemController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(Request $request, $id)
     {
-        //
+        $coupon = Coupon::findOrFail($id);
+        if(Auth::user()->profile->point > $coupon->point){
+            $point = new Point();
+            $point->user()->associate(Auth::user()->id);
+            $point->type = 'Redeem';
+            $point->coupon_id = $coupon->id;
+            $point->point = -1 * $coupon->point;
+            $point->save();
+            $coupon->amount = $coupon->amount - 1;
+            $coupon->save();
+            return response()->json(['message'=>'coupon ' . $coupon->coupon_title.' redeemed']);
+        }
+        else{
+            return response()->json(['message'=>'insufficient point.']);
+        }
     }
 
     /**
