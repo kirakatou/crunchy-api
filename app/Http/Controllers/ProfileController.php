@@ -14,6 +14,42 @@ class ProfileController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
+
+    /**
+     * @SWG\Get(
+     *      path="/api/v1/{userId}",
+     *      summary="Retrieves the collection of Profile resources.",
+     *      produces={"application/json"},
+     *      tags={"Profile"},
+     *      @SWG\Response(
+     *          response=200,
+     *          description="Profiles collection.",
+     *          @SWG\Schema(
+     *              type="array",
+     *              @SWG\Items(ref="#/definitions/profile")
+     *          )
+     *      ),
+     *      @SWG\Response(
+     *          response=401,
+     *          description="Unauthorized action."
+     *      ),
+     *      @SWG\Parameter(
+     *          name="Authorization",
+     *          description="Example = Bearer(space)'your_token'",
+     *          in="header",
+     *          required=true,
+     *          type="string",
+     *          default="Bearer" 
+     *      ),
+     *      @SWG\Parameter(
+     *          name="userId",
+     *          in="path",
+     *          description="Please enter the userId",
+     *          required=true,
+     *          type="integer"
+     *      )    
+     * )
+     */
     public function index($id)
     {
         $profile = Profile::with('user')->findOrFail($id);
@@ -89,6 +125,46 @@ class ProfileController extends Controller
         //
     }
 
+    /**
+     * @SWG\Post(
+     *      path="/api/v1/{userId}/follow",
+     *      summary="Follow or Unfollow user.",
+     *      produces={"application/json"},
+     *      consumes={"application/json"},
+     *      tags={"User Follower"},
+     *      @SWG\Response(
+     *          response=200,
+     *          description="Success.",
+     *          @SWG\Schema(
+     *              type="array",
+     *              @SWG\Items(ref="#/definitions/user follower")
+     *          )
+     *      ),
+     *      @SWG\Response(
+     *          response=401,
+     *          description="Unauthorized action."
+     *      ),
+     *      @SWG\Response(
+     *          response=404,
+     *          description="User ID not found."
+     *      ),
+     *      @SWG\Parameter(
+     *          name="Authorization",
+     *          description="Example = Bearer(space)'your_token'",
+     *          in="header",
+     *          required=true,
+     *          type="string",
+     *          default="Bearer",
+     *      ),
+     *      @SWG\Parameter(
+     *           name="userId",
+     *           in="path",
+     *           description="Please enter the userId",
+     *           required=true, 
+     *           type="integer"
+     *      )             
+     * )
+     */
     public function userDoFollow($id)
     {
         $checkUserLogin = Auth::id();
@@ -128,17 +204,104 @@ class ProfileController extends Controller
 
     }
 
-    public function followers($id){
-        $profile = Profile::with('user')->findOrFail($id);
-        $followers = UserFollower::where('user_id', Auth::id())->get();
-
-        return response()->json($followers->toArray()); 
+    /**
+     * @SWG\Get(
+     *      path="/api/v1/{userId}/followers",
+     *      summary="Show total followers by User's Id.",
+     *      produces={"application/json"},
+     *      tags={"User Follower"},
+     *      @SWG\Response(
+     *          response=200,
+     *          description="This is the data that you search.",
+     *          @SWG\Schema(
+     *              type="array",
+     *              @SWG\Items(ref="#/definitions/user follower")
+     *          )
+     *      ),
+     *      @SWG\Response(
+     *          response=401,
+     *          description="Unauthorized action."
+     *      ),
+     *      @SWG\Response(
+     *          response=404,
+     *          description="User ID not found."
+     *      ),
+     *      @SWG\Parameter(
+     *          name="Authorization",
+     *          description="Example = Bearer(space)'your_token'",
+     *          in="header",
+     *          required=true,
+     *          type="string",
+     *          default="Bearer",
+     *      ),
+     *      @SWG\Parameter(
+     *           name="userId",
+     *           description="Please enter the userId",
+     *           in="path",
+     *           required=true, 
+     *           type="integer"
+     *      )              
+     * )
+     */
+    public function followers($id) 
+    {
+        $checkUserAvailable = Profile::where('id', $id)->count();
+        if($checkUserAvailable != 0) {
+            $followers = UserFollower::where('user_id', $id)->count();
+            return $followers;
+        }else {
+            return response()->json(['messages' => 'User ID not found'], 404);
+        }
+         
     }
 
-    public function following($id){
-        $profile = Profile::with('user')->findOrFail($id);
-        $following = UserFollower::where('follower_id', Auth::id())->get();
-        
-        return response()->json($following->toArray()); 
+    /**
+     * @SWG\Get(
+     *      path="/api/v1/{userId}/following",
+     *      summary="Show total following by User's Id.",
+     *      produces={"application/json"},
+     *      tags={"User Follower"},
+     *      @SWG\Response(
+     *          response=200,
+     *          description="This is the data that you search.",
+     *          @SWG\Schema(
+     *              type="array",
+     *              @SWG\Items(ref="#/definitions/user follower")
+     *          )
+     *      ),
+     *      @SWG\Response(
+     *          response=401,
+     *          description="Unauthorized action."
+     *      ),
+     *      @SWG\Response(
+     *          response=404,
+     *          description="User ID not found."
+     *      ),
+     *      @SWG\Parameter(
+     *          name="Authorization",
+     *          description="Example = Bearer(space)'your_token'",
+     *          in="header",
+     *          required=true,
+     *          type="string",
+     *          default="Bearer",
+     *      ),
+     *      @SWG\Parameter(
+     *           name="userId",
+     *           description="Please enter the userId",
+     *           in="path",
+     *           required=true, 
+     *           type="integer"
+     *      )              
+     * )
+     */
+    public function following($id) 
+    {
+        $checkUserAvailable = Profile::where('id', $id)->count();
+        if($checkUserAvailable != 0) {
+            $following = UserFollower::where('follower_id', $id)->count();
+            return $following;
+        }else {
+            return response()->json(['messages' => 'User ID not found'], 404);
+        } 
     }
 }
