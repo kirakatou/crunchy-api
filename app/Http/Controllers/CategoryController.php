@@ -152,10 +152,6 @@ class CategoryController extends Controller
      *          )
      *      ),
      *      @SWG\Response(
-     *          response=400,
-     *          description="Invalid ID."
-     *      ),
-     *      @SWG\Response(
      *          response=401,
      *          description="Unauthorized action."
      *      ),
@@ -222,10 +218,6 @@ class CategoryController extends Controller
      *              type="array",
      *              @SWG\Items(ref="#/definitions/category")
      *          )
-     *      ),
-     *      @SWG\Response(
-     *          response=400,
-     *          description="Invalid ID."
      *      ),
      *      @SWG\Response(
      *          response=401,
