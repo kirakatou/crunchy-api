@@ -15,10 +15,224 @@
         "http"
     ],
     "paths": {
+        "/api/v1/food/admin": {
+            "get": {
+                "tags": [
+                    "Admin"
+                ],
+                "summary": "Retrieves the collection of Admin resources.",
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "Authorization",
+                        "in": "header",
+                        "description": "Example = Bearer(space)'your_token'",
+                        "required": true,
+                        "type": "string",
+                        "default": "Bearer"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Admins collection.",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/admin"
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized action."
+                    }
+                }
+            },
+            "post": {
+                "tags": [
+                    "Admin"
+                ],
+                "summary": "Register new Admin.",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "body",
+                        "in": "body",
+                        "description": "Haven't an account? Register here!",
+                        "required": true,
+                        "schema": {
+                            "properties": {
+                                "username": {
+                                    "type": "string"
+                                },
+                                "name": {
+                                    "type": "string"
+                                },
+                                "password": {
+                                    "type": "string",
+                                    "format": "password"
+                                },
+                                "email": {
+                                    "type": "string"
+                                },
+                                "gender": {
+                                    "type": "boolean"
+                                },
+                                "address": {
+                                    "type": "string"
+                                },
+                                "phone_no": {
+                                    "type": "string"
+                                }
+                            }
+                        },
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Admin token.",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/admin"
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized action."
+                    }
+                }
+            }
+        },
+        "/api/v1/food/{adminId}": {
+            "get": {
+                "tags": [
+                    "Admin"
+                ],
+                "summary": "Retrieves the collection of Admin resources.",
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "Authorization",
+                        "in": "header",
+                        "description": "Example = Bearer(space)'your_token'",
+                        "required": true,
+                        "type": "string",
+                        "default": "Bearer"
+                    },
+                    {
+                        "name": "adminId",
+                        "in": "path",
+                        "description": "Please enter the adminId",
+                        "required": true,
+                        "type": "integer"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Admins collection.",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/admin"
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized action."
+                    }
+                }
+            },
+            "put": {
+                "tags": [
+                    "Admin"
+                ],
+                "summary": "Update admin.",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "Authorization",
+                        "in": "header",
+                        "description": "Example = Bearer(space)'your_token'",
+                        "required": true,
+                        "type": "string",
+                        "default": "Bearer"
+                    },
+                    {
+                        "name": "adminId",
+                        "in": "path",
+                        "description": "Please enter the adminId",
+                        "required": true,
+                        "type": "integer"
+                    },
+                    {
+                        "name": "body",
+                        "in": "body",
+                        "description": "Update your account here!",
+                        "required": true,
+                        "schema": {
+                            "properties": {
+                                "username": {
+                                    "type": "string"
+                                },
+                                "name": {
+                                    "type": "string"
+                                },
+                                "password": {
+                                    "type": "string",
+                                    "format": "password"
+                                },
+                                "email": {
+                                    "type": "string"
+                                },
+                                "gender": {
+                                    "type": "boolean"
+                                },
+                                "address": {
+                                    "type": "string"
+                                },
+                                "phone_no": {
+                                    "type": "string"
+                                }
+                            }
+                        },
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Admin updated.",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/admin"
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized action."
+                    }
+                }
+            }
+        },
         "/api/v1/login": {
             "post": {
                 "tags": [
-                    "login"
+                    "Login"
                 ],
                 "summary": "Authenticate User.",
                 "consumes": [
@@ -64,7 +278,7 @@
         "/api/v1/register": {
             "post": {
                 "tags": [
-                    "register"
+                    "Register"
                 ],
                 "summary": "Register new User.",
                 "consumes": [
@@ -1277,8 +1491,8 @@
                 ],
                 "summary": "Update profile.",
                 "consumes": [
-                    "multipart/form-data",
-                    "application/json"
+                    "application/json",
+                    "multipart/form-data"
                 ],
                 "produces": [
                     "application/json"
@@ -2092,6 +2306,35 @@
                     "format": "int32"
                 },
                 "message": {
+                    "type": "string"
+                }
+            }
+        },
+        "admin": {
+            "properties": {
+                "id": {
+                    "type": "integer",
+                    "format": "int32"
+                },
+                "name": {
+                    "type": "string"
+                },
+                "email": {
+                    "type": "string"
+                },
+                "gender": {
+                    "type": "boolean"
+                },
+                "address": {
+                    "type": "string"
+                },
+                "phone_no": {
+                    "type": "string"
+                },
+                "create_at": {
+                    "type": "string"
+                },
+                "update_at": {
                     "type": "string"
                 }
             }
