@@ -51,6 +51,7 @@ Route::group(['prefix' => 'v1'], function(){
 		Route::post('post/{id}/report/{report_id}', 'PostController@postReport');
 
 		Route::get('/{id}', 'ProfileController@index');
+		Route::put('/{id}', 'ProfileController@update');
 		Route::get('{id}/followers', 'ProfileController@followers');
 		Route::get('{id}/following', 'ProfileController@following');
 		Route::post('{id}/follow', 'ProfileController@userDoFollow');
