@@ -70,7 +70,7 @@ class AdminController extends Controller
         *   summary="Register new Admin.",
         *   produces={"application/json"},
         *   consumes={"application/json"},
-        *   tags={"register"},
+        *   tags={"Admin"},
         *       @SWG\Response(
         *           response=200,
         *           description="Admin token.",

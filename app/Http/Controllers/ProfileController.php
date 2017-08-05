@@ -110,7 +110,7 @@ class ProfileController extends Controller
      * @return \Illuminate\Http\Response
      */
 
-    /**
+      /**
         * @SWG\Put(
         *   path="/api/v1/{userId}",
         *   summary="Update profile.",
