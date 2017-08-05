@@ -109,6 +109,73 @@ class ProfileController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
+
+    /**
+        * @SWG\Put(
+        *   path="/api/v1/{userId}",
+        *   summary="Update profile.",
+        *   produces={"application/json"},
+        *   consumes={"application/json", "multipart/form-data"},
+        *   tags={"Profile"},
+        *       @SWG\Response(
+        *           response=200,
+        *           description="Profile updated.",
+        *          @SWG\Schema(
+        *              type="array",
+        *              @SWG\Items(ref="#/definitions/profile")
+        *          )
+        *       ),
+        *       @SWG\Response(
+        *           response=401,
+        *           description="Unauthorized action."
+        *       ),
+        *      @SWG\Parameter(
+        *          name="Authorization",
+        *          description="Example = Bearer(space)'your_token'",
+        *          in="header",
+        *          required=true,
+        *          type="string",
+        *          default="Bearer" 
+        *      ),
+        *      @SWG\Parameter(
+        *           name="userId",
+        *           in="path",
+        *           description="Please enter the userId",
+        *           required=true, 
+        *           type="integer"
+        *      ),
+        *      @SWG\Parameter(
+        *           name="body",
+        *           in="body",
+        *           required=true,
+        *           description="Update your account here!",
+        *           type="string",
+        *           @SWG\Schema(
+        *               @SWG\Property(
+        *                   property="username",
+        *                   type="string"
+        *               ),
+        *               @SWG\Property(
+        *                   property="name",
+        *                   type="string"
+        *               ),
+        *               @SWG\Property(
+        *                   property="password",
+        *                   type="string",
+        *                   format="password"
+        *               ),
+        *               @SWG\Property(
+        *                   property="email",
+        *                   type="string"
+        *               ),   
+        *               @SWG\Property(
+        *                   property="gender",
+        *                   type="boolean"
+        *               ),
+        *           )
+        *      )
+        * )
+        */ 
     public function update(Request $request, $id)
     {
         $profile = Profile::findOrFail($id);
@@ -127,6 +194,7 @@ class ProfileController extends Controller
         $user->password = bcrypt($request->password);
         $user->save();
         $profile->user()->save($user);
+
     }
 
     /**
