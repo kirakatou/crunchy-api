@@ -178,22 +178,27 @@ class ProfileController extends Controller
         */ 
     public function update(Request $request, $id)
     {
-        $profile = Profile::findOrFail($id);
-        $profile->name = $request->name;
-        $profile->email = $request->email;
-        $profile->gender = $request->gender;
-        if($request->hasFile('image')){
-            if($request->image->isValid()){
-                $path = $request->image->store('public/member/' . Auth::user()->id);
-                $profile->photo = $path;
+        if($id == Auth::user()->id){
+            $profile->name = $request->name;
+            $profile->email = $request->email;
+            $profile->gender = $request->gender;
+            if($request->hasFile('image')){
+                if($request->image->isValid()){
+                    $path = $request->image->store('public/member/' . Auth::user()->id);
+                    $profile->photo = $path;
+                }
             }
+            $profile->save();
+            $user = $profile->user;
+            $user->username = $request->username;
+            $user->password = bcrypt($request->password);
+            $user->save();
+            $profile->user()->save($user);
+
+            return response()->json(['messages' => 'Your profile has been successfully updated'], 200);
+        } else{
+            return response()->json(['messages' => 'Forbidden'], 403);
         }
-        $profile->save();
-        $user = $profile->user;
-        $user->username = $request->username;
-        $user->password = bcrypt($request->password);
-        $user->save();
-        $profile->user()->save($user);
 
     }
 
