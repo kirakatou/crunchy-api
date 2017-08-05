@@ -1102,6 +1102,223 @@
                         "description": "Unauthorized action."
                     }
                 }
+            },
+            "post": {
+                "tags": [
+                    "Post"
+                ],
+                "summary": "Add new Posting image.",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "Authorization",
+                        "in": "header",
+                        "description": "Example = Bearer(space)'your_token'",
+                        "required": true,
+                        "type": "string",
+                        "default": "Bearer"
+                    },
+                    {
+                        "name": "body",
+                        "in": "body",
+                        "description": "Post object that needs to be added to the database",
+                        "required": true,
+                        "schema": {
+                            "properties": {
+                                "description": {
+                                    "type": "string"
+                                },
+                                "icon": {
+                                    "type": "string"
+                                },
+                                "taste": {
+                                    "type": "number",
+                                    "format": "double"
+                                },
+                                "price": {
+                                    "type": "number",
+                                    "format": "double"
+                                },
+                                "service": {
+                                    "type": "number",
+                                    "format": "double"
+                                }
+                            }
+                        },
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "new Posting image has successfully added.",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/post"
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized action."
+                    }
+                }
+            }
+        },
+        "/api/v1/post/{postId}": {
+            "get": {
+                "tags": [
+                    "Post"
+                ],
+                "summary": "Find Posting Image by ID.",
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "Authorization",
+                        "in": "header",
+                        "description": "Example = Bearer(space)'your_token'",
+                        "required": true,
+                        "type": "string",
+                        "default": "Bearer"
+                    },
+                    {
+                        "name": "postId",
+                        "in": "path",
+                        "description": "Please enter the postId",
+                        "required": true,
+                        "type": "integer"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "This is the data that you search.",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/post"
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized action."
+                    },
+                    "404": {
+                        "description": "Post not found."
+                    }
+                }
+            },
+            "put": {
+                "tags": [
+                    "Post"
+                ],
+                "summary": "Update posting image.",
+                "consumes": [
+                    "application/json",
+                    "multipart/form-data"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "Authorization",
+                        "in": "header",
+                        "description": "Example = Bearer(space)'your_token'",
+                        "required": true,
+                        "type": "string",
+                        "default": "Bearer"
+                    },
+                    {
+                        "name": "postId",
+                        "in": "path",
+                        "description": "Please enter the postId",
+                        "required": true,
+                        "type": "integer"
+                    },
+                    {
+                        "name": "body",
+                        "in": "body",
+                        "description": "Update your posting image here!",
+                        "required": true,
+                        "schema": {
+                            "properties": {
+                                "description": {
+                                    "type": "string"
+                                },
+                                "taste": {
+                                    "type": "number",
+                                    "format": "double"
+                                },
+                                "price": {
+                                    "type": "number",
+                                    "format": "double"
+                                },
+                                "service": {
+                                    "type": "number",
+                                    "format": "double"
+                                }
+                            }
+                        },
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Posting image updated.",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/post"
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized action."
+                    }
+                }
+            },
+            "delete": {
+                "tags": [
+                    "Post"
+                ],
+                "summary": "Remove the Post resource.",
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "Authorization",
+                        "in": "header",
+                        "description": "Example = Bearer(space)'your_token'",
+                        "required": true,
+                        "type": "string",
+                        "default": "Bearer"
+                    },
+                    {
+                        "name": "postId",
+                        "in": "path",
+                        "description": "Please enter the postId",
+                        "required": true,
+                        "type": "integer"
+                    }
+                ],
+                "responses": {
+                    "204": {
+                        "description": "Post resource deleted."
+                    },
+                    "401": {
+                        "description": "Unauthorized action."
+                    },
+                    "404": {
+                        "description": "Post not found."
+                    }
+                }
             }
         },
         "/api/v1/post/{postId}/addComment": {
