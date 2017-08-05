@@ -72,6 +72,68 @@ class PostController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
+
+    /**
+     * @SWG\Post(
+     *      path="/api/v1/post",
+     *      summary="Add new Posting image.",
+     *      produces={"application/json"},
+     *      consumes={"application/json"},
+     *      tags={"Post"},
+     *      @SWG\Response(
+     *          response=200,
+     *          description="new Posting image has successfully added.",
+     *          @SWG\Schema(
+     *              type="array",
+     *              @SWG\Items(ref="#/definitions/post")
+     *          )
+     *      ),
+     *      @SWG\Response(
+     *          response=401,
+     *          description="Unauthorized action."
+     *      ),
+     *      @SWG\Parameter(
+     *          name="Authorization",
+     *          description="Example = Bearer(space)'your_token'",
+     *          in="header",
+     *          required=true,
+     *          type="string",
+     *          default="Bearer",
+     *      ),
+     *       @SWG\Parameter(
+     *           name="body",
+     *           in="body",
+     *           required=true,
+     *           description="Post object that needs to be added to the database", 
+     *           type="string",
+     *           @SWG\Schema(
+     *               @SWG\Property(
+     *                   property="description",
+     *                   type="string"
+     *               ),
+     *               @SWG\Property(
+     *                   property="icon",
+     *                   type="string"
+     *               ),
+     *               @SWG\Property(
+     *                   property="taste",
+     *                   type="number",
+     *                   format="double"
+     *               ),
+     *               @SWG\Property(
+     *                   property="price",
+     *                   type="number",
+     *                   format="double"
+     *               ),
+     *               @SWG\Property(
+     *                   property="service",
+     *                   type="number",
+     *                   format="double"
+     *               )   
+     *           )
+     *      )              
+     * )
+     */
     public function store(Request $request)
     {
         $this->validate($request, [
@@ -117,6 +179,46 @@ class PostController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
+
+    /**
+     * @SWG\Get(
+     *      path="/api/v1/post/{postId}",
+     *      summary="Find Posting Image by ID.",
+     *      produces={"application/json"},
+     *      tags={"Post"},
+     *      @SWG\Response(
+     *          response=200,
+     *          description="This is the data that you search.",
+     *          @SWG\Schema(
+     *              type="array",
+     *              @SWG\Items(ref="#/definitions/post")
+     *          )
+     *      ),
+     *      @SWG\Response(
+     *          response=401,
+     *          description="Unauthorized action."
+     *      ),
+     *      @SWG\Response(
+     *          response=404,
+     *          description="Post not found."
+     *      ),
+     *      @SWG\Parameter(
+     *          name="Authorization",
+     *          description="Example = Bearer(space)'your_token'",
+     *          in="header",
+     *          required=true,
+     *          type="string",
+     *          default="Bearer",
+     *      ),
+     *      @SWG\Parameter(
+     *           name="postId",
+     *           in="path",
+     *           description="Please enter the postId",
+     *           required=true, 
+     *           type="integer"
+     *      )              
+     * )
+     */
     public function show($id)
     {
         $post = Post::findOrFail($id);
@@ -141,6 +243,71 @@ class PostController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
+
+    /**
+        * @SWG\Put(
+        *   path="/api/v1/post/{postId}",
+        *   summary="Update posting image.",
+        *   produces={"application/json"},
+        *   consumes={"application/json", "multipart/form-data"},
+        *   tags={"Post"},
+        *       @SWG\Response(
+        *           response=200,
+        *           description="Posting image updated.",
+        *          @SWG\Schema(
+        *              type="array",
+        *              @SWG\Items(ref="#/definitions/post")
+        *          )
+        *       ),
+        *       @SWG\Response(
+        *           response=401,
+        *           description="Unauthorized action."
+        *       ),
+        *      @SWG\Parameter(
+        *          name="Authorization",
+        *          description="Example = Bearer(space)'your_token'",
+        *          in="header",
+        *          required=true,
+        *          type="string",
+        *          default="Bearer" 
+        *      ),
+        *      @SWG\Parameter(
+        *           name="postId",
+        *           in="path",
+        *           description="Please enter the postId",
+        *           required=true, 
+        *           type="integer"
+        *      ),
+        *      @SWG\Parameter(
+        *           name="body",
+        *           in="body",
+        *           required=true,
+        *           description="Update your posting image here!",
+        *           type="string",
+        *           @SWG\Schema(
+        *               @SWG\Property(
+        *                   property="description",
+        *                   type="string"
+        *               ),
+        *               @SWG\Property(
+        *                   property="taste",
+        *                   type="number",
+        *                   format="double"
+        *               ),
+        *               @SWG\Property(
+        *                   property="price",
+        *                   type="number",
+        *                   format="double"
+        *               ),
+        *               @SWG\Property(
+        *                   property="service",
+        *                   type="number",
+        *                   format="double"
+        *               )
+        *           )
+        *      )
+        * )
+        */ 
     public function update(Request $request, $id)
     {
         $this->validate($request, [
@@ -175,6 +342,42 @@ class PostController extends Controller
      *
      * @param  int  $id
      * @return \Illuminate\Http\Response
+     */
+
+    /**
+     * @SWG\Delete(
+     *      path="/api/v1/post/{postId}",
+     *      summary="Remove the Post resource.",
+     *      produces={"application/json"},
+     *      tags={"Post"},
+     *      @SWG\Response(
+     *          response=204,
+     *          description="Post resource deleted."
+     *      ),
+     *      @SWG\Response(
+     *          response=401,
+     *          description="Unauthorized action."
+     *      ),
+     *      @SWG\Response(
+     *          response=404,
+     *          description="Post not found."
+     *      ),
+     *      @SWG\Parameter(
+     *          name="Authorization",
+     *          description="Example = Bearer(space)'your_token'",
+     *          in="header",
+     *          required=true,
+     *          type="string",
+     *          default="Bearer",
+     *      ),
+     *      @SWG\Parameter(
+     *           name="postId",
+     *           in="path",
+     *           description="Please enter the postId",
+     *           required=true, 
+     *           type="integer"
+     *      )              
+     * )
      */
     public function destroy($id)
     {
