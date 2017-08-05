@@ -169,7 +169,7 @@ class ProfileController extends Controller
     {
         $checkUserLogin = Auth::id();
         $checkUserAvailable = Profile::where('id', $id)->count();
-        $checkIfFollow = UserFollower::where('user_id', $id)->where('follower_id', Auth::id())->count();
+        $checkIfFollow = UserFollower::where('user_id', Auth::id())->where('follow_id', $id)->count();
         if($checkUserAvailable != 0) 
         {
             if($checkUserLogin == $id)
@@ -180,16 +180,16 @@ class ProfileController extends Controller
                 if($checkIfFollow == 0)
                 {
                     $userFollower = new UserFollower();
-                    $userFollower->user_id = $id;
-                    $userFollower->follower_id = Auth::id();
+                    $userFollower->user_id = Auth::id();
+                    $userFollower->follow_id = $id;
                     $userFollower->save();
                     
                     return response()->json(['messages' => 'Success'], 200);
                 
                 }else
                 {
-                    $userFollower = UserFollower::where('user_id', $id)
-                                          ->where('follower_id', Auth::id())
+                    $userFollower = UserFollower::where('user_id', Auth::id())
+                                          ->where('follow_id', $id)
                                           ->delete();
 
                     return response()->json(['messages' => 'Success'], 200);                      
@@ -247,11 +247,15 @@ class ProfileController extends Controller
     {
         $checkUserAvailable = Profile::where('id', $id)->count();
         if($checkUserAvailable != 0) {
-            $followers = UserFollower::where('user_id', $id)->count();
-            return $followers;
+            $follower = Profile::select('name')
+                            ->leftJoin('user_followers', 'profiles.id', 'user_followers.user_id')
+                            ->where('user_followers.follow_id', $id)
+                            ->get();
+
+            return $follower;
         }else {
             return response()->json(['messages' => 'User ID not found'], 404);
-        }
+        } 
          
     }
 
@@ -298,7 +302,11 @@ class ProfileController extends Controller
     {
         $checkUserAvailable = Profile::where('id', $id)->count();
         if($checkUserAvailable != 0) {
-            $following = UserFollower::where('follower_id', $id)->count();
+            $following = Profile::select('name')
+                            ->leftJoin('user_followers', 'profiles.id', 'user_followers.follow_id')
+                            ->where('user_followers.user_id', $id)
+                            ->get();
+
             return $following;
         }else {
             return response()->json(['messages' => 'User ID not found'], 404);
