@@ -48,7 +48,7 @@ class LoginController extends Controller
         *   summary="Authenticate User.",
         *   produces={"application/json"},
         *   consumes={"application/json"},
-        *   tags={"login"},
+        *   tags={"Login"},
         *       @SWG\Response(
         *           response=200,
         *           description="User token.",

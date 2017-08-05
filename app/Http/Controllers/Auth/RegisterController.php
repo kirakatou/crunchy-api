@@ -97,7 +97,7 @@ class RegisterController extends Controller
         *   summary="Register new User.",
         *   produces={"application/json"},
         *   consumes={"application/json"},
-        *   tags={"register"},
+        *   tags={"Register"},
         *       @SWG\Response(
         *           response=200,
         *           description="User token.",
